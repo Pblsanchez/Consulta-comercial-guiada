@@ -2,15 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard Comercial – Borrador</title>
+  <title>Dashboard Comercial – Mockup Funcional Mejorado</title>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/main.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Estilos locales filtros -->
   <style>
     .filter-group {
       display: flex;
@@ -47,12 +43,70 @@
       border-color: #c8102e;
       box-shadow: 0 0 12px rgba(200,16,46,0.4);
     }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 8px 0 4px 0;
+      color: #1a1a1a;
+    }
+
+    .kpi-variation {
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .kpi-variation.positive { color: #2e7d32; }
+    .kpi-variation.negative { color: #c8102e; }
+    .kpi-variation.neutral { color: #666; }
+
+    .context-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      background: #f0f0f0;
+      color: #555;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .copilot-thinking {
+      display: inline-block;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .memory-item {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      background: #fff3e0;
+      color: #e65100;
+      margin: 4px 4px 0 0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .memory-item:hover {
+      background: #ffe0b2;
+    }
   </style>
 </head>
 
 <body>
 <header>
-  <h1>DASHBOARD COMERCIAL – BORRADOR</h1>
+  <h1>DASHBOARD COMERCIAL</h1>
+  <span style="font-size:12px;color:#888;margin-left:12px;">Mockup Funcional Mejorado</span>
 </header>
 
 <div class="page">
@@ -63,199 +117,827 @@
 
     <!-- Año + Trimestres -->
     <div class="filter-group">
-      <button class="filter-btn active" onclick="setYear(2026)">2026</button>
-      <button class="filter-btn" onclick="setYear(2025)">2025</button>
+      <button class="filter-btn active" data-year="2026">2026</button>
+      <button class="filter-btn" data-year="2025">2025</button>
 
       <span class="filter-sep">|</span>
 
-      <button class="filter-btn" onclick="toggleQuarter('Q1')">Q1</button>
-      <button class="filter-btn" onclick="toggleQuarter('Q2')">Q2</button>
-      <button class="filter-btn" onclick="toggleQuarter('Q3')">Q3</button>
-      <button class="filter-btn" onclick="toggleQuarter('Q4')">Q4</button>
+      <button class="filter-btn" data-quarter="Q1">Q1</button>
+      <button class="filter-btn" data-quarter="Q2">Q2</button>
+      <button class="filter-btn" data-quarter="Q3">Q3</button>
+      <button class="filter-btn" data-quarter="Q4">Q4</button>
+
+      <span class="context-badge" id="contextBadge">Vista anual 2026</span>
     </div>
 
-    <!-- KPIs -->
+    <!-- KPIs con valores reales -->
     <div class="grid-2">
-      <div class="box" onclick="renderMainChart('facturacion','line')">
+      <div class="box" data-metric="facturacion" data-chart-type="line">
         <h3>1. Facturación</h3>
-        <p>Facturación mensual</p>
+        <div class="kpi-value" id="kpi-facturacion">—</div>
+        <div class="kpi-variation" id="kpi-facturacion-var">—</div>
+        <p>Facturación mensual (millones ARS)</p>
       </div>
 
-      <div class="box" onclick="renderMainChart('dias_calle','bar')">
+      <div class="box" data-metric="dias_calle" data-chart-type="bar">
         <h3>2. Días en la Calle</h3>
+        <div class="kpi-value" id="kpi-dias_calle">—</div>
+        <div class="kpi-variation" id="kpi-dias_calle-var">—</div>
         <p>Promedio mensual</p>
       </div>
     </div>
 
     <div class="grid-3">
-      <div class="box" onclick="renderMainChart('rentabilidad','line')">
+      <div class="box" data-metric="rentabilidad" data-chart-type="line">
         <h3>3. Rentabilidad</h3>
+        <div class="kpi-value" id="kpi-rentabilidad">—</div>
+        <div class="kpi-variation" id="kpi-rentabilidad-var">—</div>
         <p>Margen mensual</p>
       </div>
 
-      <div class="box" onclick="renderMainChart('oportunidades','bar')">
+      <div class="box" data-metric="oportunidades" data-chart-type="bar">
         <h3>4. Oportunidades</h3>
+        <div class="kpi-value" id="kpi-oportunidades">—</div>
+        <div class="kpi-variation" id="kpi-oportunidades-var">—</div>
         <p>Oportunidades activas</p>
       </div>
 
-      <div class="box" onclick="renderMainChart('facturacion','line',true)">
+      <div class="box" data-metric="facturacion" data-chart-type="line" data-full-history="true">
         <h3>5. Facturación YTD</h3>
+        <div class="kpi-value" id="kpi-facturacion-ytd">—</div>
+        <div class="kpi-variation neutral">Histórico completo</div>
         <p>Evolución histórica</p>
       </div>
     </div>
 
-    <canvas id="mainChart" style="max-height:220px;"></canvas>
+    <div style="position:relative; height:240px;">
+      <canvas id="mainChart"></canvas>
+    </div>
   </div>
 
   <!-- ================= COPILOT ================= -->
   <div class="bottom">
-    <b>Consulta comercial guiada (Copilot)</b>
+    <b>Consulta comercial guiada (Copilot heurístico)</b>
+
+    <!-- Memoria conversacional -->
+    <div id="memoryPanel" style="margin-top:8px;min-height:24px;">
+      <span style="font-size:11px;color:#999;">Historial reciente:</span>
+    </div>
 
     <div class="chat-box">
       <input
         id="chatInput"
-        placeholder="Ej: analizar rentabilidad vs facturacion Q2 2025"
+        placeholder="Ej: comparar facturación vs rentabilidad en Q2 2025"
+        onkeypress="if(event.key==='Enter') window.runCopilot()"
       />
-      <button onclick="runCopilot()">Consultar</button>
+      <button onclick="window.runCopilot()">Consultar</button>
     </div>
 
     <div id="chatResponse"></div>
-    <canvas id="copilotChart" style="max-height:200px; margin-top:12px;"></canvas>
+    <div style="position:relative; height:220px; margin-top:12px;">
+      <canvas id="copilotChart"></canvas>
+    </div>
   </div>
 
 </div>
 
 <!-- ================= JS PRINCIPAL ================= -->
 <script type="module">
-  import { getMetric } from "./js/dataService.js";
+  import {
+    getMetric,
+    filterByYear,
+    filterByQuarter,
+    sumValues,
+    averageValue,
+    comparePeriods,
+    detectOutliers
+  } from "./js/dataService.js";
 
+  // ================= ESTADO GLOBAL =================
   let mainChart = null;
   let copilotChart = null;
-
   let selectedYear = 2026;
   let selectedQuarters = new Set();
+  let currentMainMetric = "facturacion";
+  let currentMainType = "line";
+  let currentFullHistory = false;
 
+  // Memoria conversacional (últimas 5 consultas)
+  let conversationMemory = [];
+  const MAX_MEMORY = 5;
+
+  // Mapa de métricas para detección de intención
   const metricMap = {
-    facturacion: ["facturacion", "ventas"],
-    rentabilidad: ["rentabilidad", "margen"],
-    dias_calle: ["dias", "cobranza"],
-    oportunidades: ["oportunidades", "pipeline"]
+    facturacion: ["facturacion", "facturación", "ventas", "ingresos", "factur"],
+    rentabilidad: ["rentabilidad", "margen", "rentable", "marg"],
+    dias_calle: ["dias", "días", "calle", "cobranza", "cobro", "cobr"],
+    oportunidades: ["oportunidades", "pipeline", "oportunidad", "opp"]
   };
 
-  // ================= FILTROS =================
-  window.setYear = year => {
-    selectedYear = year;
-    updateButtons();
-    renderMainChart("facturacion","line");
+  // Nombres legibles
+  const metricNames = {
+    facturacion: "Facturación",
+    dias_calle: "Días en la Calle",
+    rentabilidad: "Rentabilidad",
+    oportunidades: "Oportunidades"
   };
 
-  window.toggleQuarter = q => {
-    selectedQuarters.has(q) ? selectedQuarters.delete(q) : selectedQuarters.add(q);
-    updateButtons();
-    renderMainChart("facturacion","line");
+  const metricUnits = {
+    facturacion: "millones ARS",
+    dias_calle: "días",
+    rentabilidad: "%",
+    oportunidades: "unidades"
   };
 
-  function updateButtons() {
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-    document.querySelector(`.filter-btn[onclick="setYear(${selectedYear})"]`)?.classList.add("active");
-    selectedQuarters.forEach(q => {
-      document.querySelector(`.filter-btn[onclick="toggleQuarter('${q}')"]`)?.classList.add("active");
+  // ================= INICIALIZACIÓN DE EVENTOS =================
+  function initEventListeners() {
+    // Botones de filtro con data attributes
+    document.querySelectorAll(".filter-btn[data-year]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const year = parseInt(btn.dataset.year);
+        setYear(year);
+      });
+    });
+
+    document.querySelectorAll(".filter-btn[data-quarter]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const q = btn.dataset.quarter;
+        toggleQuarter(q);
+      });
+    });
+
+    // Clic en cajas de KPI
+    document.querySelectorAll(".box[data-metric]").forEach(box => {
+      box.addEventListener("click", () => {
+        const metric = box.dataset.metric;
+        const chartType = box.dataset.chartType || "line";
+        const fullHistory = box.dataset.fullHistory === "true";
+        
+        currentMainMetric = metric;
+        currentMainType = chartType;
+        currentFullHistory = fullHistory;
+        
+        renderMainChart(metric, chartType, fullHistory);
+        updateAllKPIs();
+      });
     });
   }
 
-  // ================= GRAFICO PRINCIPAL =================
-  window.renderMainChart = async function(metric, type, fullHistory=false) {
-    const data = await getMetric(metric);
-    let filtered = data.filter(d => d.year === selectedYear);
+  // ================= FILTROS =================
+  window.setYear = function(year) {
+    selectedYear = year;
+    updateFilterButtons();
+    updateContextBadge();
+    renderMainChart(currentMainMetric, currentMainType, currentFullHistory);
+    updateAllKPIs();
+  };
 
-    if (!fullHistory && selectedQuarters.size > 0) {
+  window.toggleQuarter = function(q) {
+    if (selectedQuarters.has(q)) {
+      selectedQuarters.delete(q);
+    } else {
+      selectedQuarters.add(q);
+    }
+    updateFilterButtons();
+    updateContextBadge();
+    renderMainChart(currentMainMetric, currentMainType, currentFullHistory);
+    updateAllKPIs();
+  };
+
+  function updateFilterButtons() {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    
+    document.querySelectorAll(`.filter-btn[data-year="${selectedYear}"]`).forEach(b => {
+      b.classList.add("active");
+    });
+    
+    selectedQuarters.forEach(q => {
+      document.querySelectorAll(`.filter-btn[data-quarter="${q}"]`).forEach(b => {
+        b.classList.add("active");
+      });
+    });
+  }
+
+  function updateContextBadge() {
+    const badge = document.getElementById("contextBadge");
+    if (selectedQuarters.size === 0) {
+      badge.textContent = `Vista anual ${selectedYear}`;
+    } else {
+      const quarters = [...selectedQuarters].sort().join(", ");
+      badge.textContent = `${quarters} ${selectedYear}`;
+    }
+  }
+
+  // ================= FILTRADO DE DATOS =================
+  async function getFilteredData(metric) {
+    const allData = await getMetric(metric);
+    let filtered = filterByYear(allData, selectedYear);
+    
+    if (selectedQuarters.size > 0) {
       filtered = filtered.filter(d => selectedQuarters.has(d.quarter));
+    }
+    
+    return filtered;
+  }
+
+  async function getFilteredDataForYearQuarter(metric, year, quarters) {
+    const allData = await getMetric(metric);
+    let filtered = filterByYear(allData, year);
+    
+    if (quarters && quarters.size > 0) {
+      filtered = filtered.filter(d => quarters.has(d.quarter));
+    }
+    
+    return filtered;
+  }
+
+  // ================= KPIs CON INDICADORES =================
+  async function updateAllKPIs() {
+    const metrics = ["facturacion", "dias_calle", "rentabilidad", "oportunidades"];
+    
+    for (const metric of metrics) {
+      await updateSingleKPI(metric);
+    }
+    
+    // KPI especial: Facturación YTD (histórico completo)
+    await updateFacturacionYTD();
+  }
+
+  async function updateSingleKPI(metric) {
+    const data = await getFilteredData(metric);
+    
+    if (data.length === 0) {
+      document.getElementById(`kpi-${metric}`).textContent = "—";
+      document.getElementById(`kpi-${metric}-var`).textContent = "Sin datos";
+      document.getElementById(`kpi-${metric}-var`).className = "kpi-variation neutral";
+      return;
+    }
+
+    const value = data.length > 0 ? data[data.length - 1].value : 0;
+    const avg = averageValue(data);
+    
+    // Formatear según métrica
+    let formattedValue;
+    if (metric === "facturacion") {
+      formattedValue = `$${(value / 1000).toFixed(1)}K`;
+    } else if (metric === "rentabilidad") {
+      formattedValue = `${value.toFixed(1)}%`;
+    } else if (metric === "dias_calle") {
+      formattedValue = `${value.toFixed(0)} días`;
+    } else {
+      formattedValue = value.toFixed(0);
+    }
+    
+    document.getElementById(`kpi-${metric}`).textContent = formattedValue;
+    
+    // Calcular variación vs período anterior
+    const variationEl = document.getElementById(`kpi-${metric}-var`);
+    if (data.length >= 2) {
+      const prevValue = data[0].value;
+      const variation = ((value - prevValue) / prevValue) * 100;
+      
+      let variationClass, variationText, arrowIcon;
+      if (variation > 0.5) {
+        variationClass = metric === "dias_calle" ? "negative" : "positive";
+        arrowIcon = "▲";
+        variationText = `+${variation.toFixed(1)}% vs inicio del período`;
+      } else if (variation < -0.5) {
+        variationClass = metric === "dias_calle" ? "positive" : "negative";
+        arrowIcon = "▼";
+        variationText = `${variation.toFixed(1)}% vs inicio del período`;
+      } else {
+        variationClass = "neutral";
+        arrowIcon = "◆";
+        variationText = `${variation.toFixed(1)}% (estable)`;
+      }
+      
+      variationEl.textContent = `${arrowIcon} ${variationText}`;
+      variationEl.className = `kpi-variation ${variationClass}`;
+    } else {
+      variationEl.textContent = "Sin datos comparativos";
+      variationEl.className = "kpi-variation neutral";
+    }
+  }
+
+  async function updateFacturacionYTD() {
+    const allData = await getMetric("facturacion");
+    const total = sumValues(allData);
+    const kpiEl = document.getElementById("kpi-facturacion-ytd");
+    if (kpiEl) {
+      kpiEl.textContent = `$${(total / 1000).toFixed(0)}K total`;
+    }
+  }
+
+  // ================= GRAFICO PRINCIPAL =================
+  window.renderMainChart = async function(metric, type, fullHistory = false) {
+    let data;
+    
+    if (fullHistory) {
+      const allData = await getMetric(metric);
+      data = allData.sort((a, b) => {
+        if (a.year !== b.year) return a.year - b.year;
+        const months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
+                        "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+        return months.indexOf(a.month) - months.indexOf(b.month);
+      });
+    } else {
+      data = await getFilteredData(metric);
     }
 
     if (mainChart) mainChart.destroy();
 
-    mainChart = new Chart(document.getElementById("mainChart"), {
-      type,
+    const labels = data.map(d => `${d.month.substring(0,3)} ${d.year}`);
+    const values = data.map(d => d.value);
+
+    const ctx = document.getElementById("mainChart").getContext("2d");
+    mainChart = new Chart(ctx, {
+      type: type,
       data: {
-        labels: filtered.map(d => d.month),
+        labels: labels,
         datasets: [{
-          label: metric.toUpperCase(),
-          data: filtered.map(d => d.value),
+          label: metricNames[metric] || metric,
+          data: values,
           borderColor: "#c8102e",
-          backgroundColor: "rgba(200,16,46,0.25)",
-          tension: 0.3
+          backgroundColor: type === "bar" 
+            ? "rgba(200,16,46,0.3)" 
+            : "rgba(200,16,46,0.15)",
+          borderWidth: 2,
+          tension: 0.3,
+          fill: type === "line",
+          pointRadius: values.length > 12 ? 2 : 4,
+          pointHoverRadius: 6
         }]
       },
       options: {
+        responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { position: "bottom" } }
+        interaction: {
+          intersect: false,
+          mode: "index"
+        },
+        plugins: {
+          legend: { 
+            position: "bottom",
+            labels: { usePointStyle: true, padding: 20 }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const val = context.parsed.y;
+                if (metric === "facturacion") return `$${val.toLocaleString()} M`;
+                if (metric === "rentabilidad") return `${val.toFixed(1)}%`;
+                if (metric === "dias_calle") return `${val.toFixed(0)} días`;
+                return val.toFixed(0);
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            grid: { color: "rgba(0,0,0,0.06)" }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
       }
     });
+
+    currentMainMetric = metric;
+    currentMainType = type;
+    currentFullHistory = fullHistory;
   };
 
-  // ================= COPILOT =================
+  // ================= COPILOT MEJORADO =================
   window.runCopilot = async function() {
-    const text = document.getElementById("chatInput").value.toLowerCase();
+    const text = document.getElementById("chatInput").value.toLowerCase().trim();
+    
+    if (!text) {
+      document.getElementById("chatResponse").innerHTML = `
+        <div class="response">
+          <b>Copilot:</b> Por favor, escribe una consulta. Puedes preguntar por métricas, 
+          comparar con "vs", o pedir análisis por año y trimestre.
+        </div>`;
+      return;
+    }
 
-    let metrics = Object.keys(metricMap)
-      .filter(m => metricMap[m].some(k => text.includes(k)));
+    // Mostrar estado de "pensando"
+    document.getElementById("chatResponse").innerHTML = `
+      <div class="response">
+        <b>Copilot:</b> <span class="copilot-thinking">Analizando consulta...</span>
+      </div>`;
 
+    // Pequeño delay para efecto de "procesamiento"
+    await new Promise(resolve => setTimeout(resolve, 400));
+
+    // 1. Detectar año en el texto
     if (text.includes("2025")) selectedYear = 2025;
     if (text.includes("2026")) selectedYear = 2026;
 
+    // 2. Detectar trimestres
     selectedQuarters.clear();
-    ["q1","q2","q3","q4"].forEach(q => {
-      if (text.includes(q)) selectedQuarters.add(q.toUpperCase());
-    });
+    if (text.includes("q1") || text.includes("trimestre 1") || text.includes("primer trimestre")) 
+      selectedQuarters.add("Q1");
+    if (text.includes("q2") || text.includes("trimestre 2") || text.includes("segundo trimestre")) 
+      selectedQuarters.add("Q2");
+    if (text.includes("q3") || text.includes("trimestre 3") || text.includes("tercer trimestre")) 
+      selectedQuarters.add("Q3");
+    if (text.includes("q4") || text.includes("trimestre 4") || text.includes("cuarto trimestre")) 
+      selectedQuarters.add("Q4");
 
-    const m1 = metrics[0] || "facturacion";
-    const m2 = metrics[1];
-
-    const d1 = await getMetric(m1);
-    const f1 = d1.filter(d =>
-      d.year === selectedYear &&
-      (!selectedQuarters.size || selectedQuarters.has(d.quarter))
-    );
-
-    const avg = f1.reduce((a,b)=>a+b.value,0)/f1.length;
-    const trend = f1.at(-1).value > f1[0].value ? "crecimiento" : "caída";
-
-    document.getElementById("chatResponse").innerHTML = `
-      <div class="response">
-        <b>Copilot:</b><br><br>
-        El análisis muestra <b>${trend}</b> en <b>${m1}${m2 ? " vs " + m2 : ""}</b>
-        para ${selectedQuarters.size ? [...selectedQuarters].join(", ") : "el año completo"} ${selectedYear}.<br>
-        Promedio del período: <b>${avg.toFixed(1)}</b>.
-      </div>
-    `;
-
-    if (copilotChart) copilotChart.destroy();
-
-    copilotChart = new Chart(document.getElementById("copilotChart"), {
-      type: "line",
-      data: {
-        labels: f1.map(d => d.month),
-        datasets: [{
-          label: "Análisis Copilot",
-          data: f1.map(d => d.value),
-          borderColor: "#c8102e",
-          tension: 0.3
-        }]
-      },
-      options: {
-        maintainAspectRatio: false,
-        plugins: { legend: { position: "bottom" } }
+    // 3. Detectar métricas mencionadas
+    let detectedMetrics = [];
+    for (const [metric, keywords] of Object.entries(metricMap)) {
+      if (keywords.some(k => text.includes(k))) {
+        detectedMetrics.push(metric);
       }
-    });
+    }
 
-    updateButtons();
+    const m1 = detectedMetrics[0] || currentMainMetric;
+    const m2 = detectedMetrics[1] || null;
+    const isComparison = text.includes("vs") || text.includes("versus") || text.includes("comparar") || text.includes("comparación");
+
+    // 4. Obtener datos
+    const data1 = await getFilteredDataForYearQuarter(m1, selectedYear, selectedQuarters);
+    
+    let data2 = null;
+    if (m2 && isComparison) {
+      data2 = await getFilteredDataForYearQuarter(m2, selectedYear, selectedQuarters);
+    }
+
+    // 5. Generar narrativa
+    const narrative = generateNarrative(m1, m2, data1, data2, isComparison);
+    
+    // 6. Actualizar UI
+    document.getElementById("chatResponse").innerHTML = narrative;
+    
+    // 7. Renderizar gráfico de Copilot
+    renderCopilotChart(m1, m2, data1, data2, isComparison);
+    
+    // 8. Actualizar gráfico principal a la métrica detectada
+    await renderMainChart(m1, "line", false);
+    
+    // 9. Actualizar filtros y KPIs
+    updateFilterButtons();
+    updateContextBadge();
+    await updateAllKPIs();
+    
+    // 10. Agregar a memoria conversacional
+    addToMemory(text);
+    
+    // Limpiar input
+    document.getElementById("chatInput").value = "";
   };
 
-  // Render inicial
-  renderMainChart("facturacion","line");
+  function generateNarrative(m1, m2, data1, data2, isComparison) {
+    if (data1.length === 0) {
+      return `<div class="response"><b>Copilot:</b> No hay datos disponibles para los filtros seleccionados.</div>`;
+    }
+
+    const avg1 = averageValue(data1);
+    const sum1 = sumValues(data1);
+    const trend1 = data1[data1.length - 1].value > data1[0].value ? "crecimiento" : "caída";
+    const delta1 = ((data1[data1.length - 1].value - data1[0].value) / data1[0].value * 100);
+
+    const unit1 = metricUnits[m1];
+    const name1 = metricNames[m1];
+    const period = selectedQuarters.size > 0 
+      ? [...selectedQuarters].sort().join(", ") + " " + selectedYear
+      : `el año ${selectedYear}`;
+
+    // ===== CASO 1: COMPARATIVA ENTRE MÉTRICAS =====
+    if (isComparison && m2 && data2 && data2.length > 0) {
+      const avg2 = averageValue(data2);
+      const sum2 = sumValues(data2);
+      const trend2 = data2[data2.length - 1].value > data2[0].value ? "crecimiento" : "caída";
+      const delta2 = ((data2[data2.length - 1].value - data2[0].value) / data2[0].value * 100);
+      
+      const name2 = metricNames[m2];
+      const unit2 = metricUnits[m2];
+
+      // Determinar tipo de relación
+      let insightType = "";
+      if (delta1 > 1 && delta2 < -1) {
+        insightType = "trade-off";
+      } else if (delta1 > 1 && delta2 > 1) {
+        insightType = "saludable";
+      } else if (Math.abs(delta1) < 1 && Math.abs(delta2) < 1) {
+        insightType = "estancamiento";
+      } else if (delta1 < -1 && delta2 < -1) {
+        insightType = "caida";
+      } else {
+        insightType = "mixto";
+      }
+
+      return buildComparisonNarrative(name1, name2, unit1, unit2, period, 
+                                       avg1, avg2, delta1, delta2, sum1, sum2, insightType);
+
+    // ===== CASO 2: MÉTRICA ÚNICA =====
+    } else {
+      let insightType = "";
+      if (delta1 > 5) insightType = "saludable";
+      else if (delta1 > 0) insightType = "moderado";
+      else if (Math.abs(delta1) < 1) insightType = "estancamiento";
+      else insightType = "caida";
+
+      return buildSingleMetricNarrative(name1, unit1, period, avg1, sum1, delta1, data1, insightType);
+    }
+  }
+
+  function buildComparisonNarrative(name1, name2, unit1, unit2, period, 
+                                     avg1, avg2, delta1, delta2, sum1, sum2, insightType) {
+    
+    const iconMap = {
+      "trade-off": "⚖️",
+      "saludable": "✅",
+      "estancamiento": "⏸️",
+      "caida": "⚠️",
+      "mixto": "🔄"
+    };
+
+    const narratives = {
+      "trade-off": `
+        <b>Análisis: Crecimiento con Trade-off</b><br><br>
+        Detectamos un <b>crecimiento en ${name1.toLowerCase()}</b> (+${delta1.toFixed(1)}%) 
+        que viene acompañado de una <b>contracción en ${name2.toLowerCase()}</b> (${delta2.toFixed(1)}%).<br><br>
+        📊 <b>${name1}:</b> Promedio de <b>${formatValue(avg1, unit1)}</b> | Total acumulado: <b>${formatValue(sum1, unit1)}</b><br>
+        📊 <b>${name2}:</b> Promedio de <b>${formatValue(avg2, unit2)}</b> | Total acumulado: <b>${formatValue(sum2, unit2)}</b><br><br>
+        <b>Recomendación:</b> Revisar si el crecimiento en ${name1.toLowerCase()} está impactando 
+        negativamente en ${name2.toLowerCase()}. Evaluar estrategia de pricing o eficiencia operativa.
+      `,
+      "saludable": `
+        <b>Análisis: Crecimiento Saludable</b><br><br>
+        Ambas métricas muestran <b>tendencia positiva</b> en ${period}.<br><br>
+        📊 <b>${name1}:</b> +${delta1.toFixed(1)}% | Promedio: <b>${formatValue(avg1, unit1)}</b><br>
+        📊 <b>${name2}:</b> +${delta2.toFixed(1)}% | Promedio: <b>${formatValue(avg2, unit2)}</b><br><br>
+        <b>Recomendación:</b> Mantener estrategia comercial actual. El desempeño es sólido en ambas dimensiones.
+      `,
+      "estancamiento": `
+        <b>Análisis: Estancamiento Detectado</b><br><br>
+        Ambas métricas presentan <b>variaciones mínimas</b> en ${period}.<br><br>
+        📊 <b>${name1}:</b> ${delta1.toFixed(1)}% | Promedio: <b>${formatValue(avg1, unit1)}</b><br>
+        📊 <b>${name2}:</b> ${delta2.toFixed(1)}% | Promedio: <b>${formatValue(avg2, unit2)}</b><br><br>
+        <b>Recomendación:</b> Explorar nuevas iniciativas comerciales para reactivar el crecimiento.
+      `,
+      "caida": `
+        <b>Análisis: Caída de Desempeño</b><br><br>
+        Ambas métricas muestran <b>tendencia negativa</b> en ${period}.<br><br>
+        📊 <b>${name1}:</b> ${delta1.toFixed(1)}% | Promedio: <b>${formatValue(avg1, unit1)}</b><br>
+        📊 <b>${name2}:</b> ${delta2.toFixed(1)}% | Promedio: <b>${formatValue(avg2, unit2)}</b><br><br>
+        <b>Recomendación:</b> Se requiere una revisión urgente de la estrategia comercial.
+      `,
+      "mixto": `
+        <b>Análisis: Comportamiento Mixto</b><br><br>
+        Las métricas muestran <b>comportamientos diferentes</b> en ${period}.<br><br>
+        📊 <b>${name1}:</b> ${delta1 >= 0 ? "+" : ""}${delta1.toFixed(1)}% | Promedio: <b>${formatValue(avg1, unit1)}</b><br>
+        📊 <b>${name2}:</b> ${delta2 >= 0 ? "+" : ""}${delta2.toFixed(1)}% | Promedio: <b>${formatValue(avg2, unit2)}</b><br><br>
+        <b>Recomendación:</b> Analizar cada métrica por separado para entender las causas específicas.
+      `
+    };
+
+    return `<div class="response">
+      <b>Copilot ${iconMap[insightType]}:</b><br><br>
+      ${narratives[insightType]}
+    </div>`;
+  }
+
+  function buildSingleMetricNarrative(name, unit, period, avg, sum, delta, data, insightType) {
+    const iconMap = {
+      "saludable": "✅",
+      "moderado": "📈",
+      "estancamiento": "⏸️",
+      "caida": "⚠️"
+    };
+
+    const outliers = detectOutliers(data);
+    const hasOutliers = outliers.length > 0;
+
+    const narratives = {
+      "saludable": `
+        <b>Análisis: Crecimiento Saludable en ${name}</b><br><br>
+        ${name} muestra un <b>crecimiento sólido del +${delta.toFixed(1)}%</b> durante ${period}.<br><br>
+        📊 Promedio del período: <b>${formatValue(avg, unit)}</b><br>
+        📊 Total acumulado: <b>${formatValue(sum, unit)}</b><br>
+        ${hasOutliers ? `🔍 Se detectaron <b>${outliers.length} valores atípicos</b> que merecen análisis adicional.<br>` : ""}
+        <br><b>Recomendación:</b> La tendencia es positiva. Documentar las prácticas actuales para replicar este desempeño.
+      `,
+      "moderado": `
+        <b>Análisis: Crecimiento Moderado en ${name}</b><br><br>
+        ${name} presenta un <b>crecimiento leve del +${delta.toFixed(1)}%</b> en ${period}.<br><br>
+        📊 Promedio del período: <b>${formatValue(avg, unit)}</b><br>
+        📊 Total acumulado: <b>${formatValue(sum, unit)}</b><br><br>
+        <b>Recomendación:</b> Si bien la tendencia es positiva, el ritmo es moderado. Evaluar aceleradores comerciales.
+      `,
+      "estancamiento": `
+        <b>Análisis: Estancamiento en ${name}</b><br><br>
+        ${name} muestra <b>variación mínima (${delta.toFixed(1)}%)</b> durante ${period}, indicando un estancamiento.<br><br>
+        📊 Promedio del período: <b>${formatValue(avg, unit)}</b><br>
+        📊 Total acumulado: <b>${formatValue(sum, unit)}</b><br><br>
+        <b>Recomendación:</b> Se sugiere revisar la estrategia actual y explorar nuevas tácticas de activación.
+      `,
+      "caida": `
+        <b>Análisis: Caída de Desempeño en ${name}</b><br><br>
+        ${name} registra una <b>caída del ${delta.toFixed(1)}%</b> en ${period}, lo cual requiere atención inmediata.<br><br>
+        📊 Promedio del período: <b>${formatValue(avg, unit)}</b><br>
+        📊 Total acumulado: <b>${formatValue(sum, unit)}</b><br>
+        ${hasOutliers ? `🔍 Se detectaron <b>${outliers.length} meses atípicos</b>. Recomendamos analizar causas puntuales.<br>` : ""}
+        <br><b>Recomendación:</b> Activar plan de contingencia comercial y realizar diagnóstico detallado.
+      `
+    };
+
+    return `<div class="response">
+      <b>Copilot ${iconMap[insightType]}:</b><br><br>
+      ${narratives[insightType]}
+    </div>`;
+  }
+
+  function formatValue(value, unit) {
+    if (unit === "millones ARS") {
+      return `$${value.toLocaleString("es-AR", {minimumFractionDigits: 1, maximumFractionDigits: 1})} M`;
+    } else if (unit === "%") {
+      return `${value.toFixed(1)}%`;
+    } else if (unit === "días") {
+      return `${value.toFixed(1)} días`;
+    } else {
+      return value.toFixed(0);
+    }
+  }
+
+  function renderCopilotChart(m1, m2, data1, data2, isComparison) {
+    if (copilotChart) copilotChart.destroy();
+
+    const ctx = document.getElementById("copilotChart").getContext("2d");
+
+    if (isComparison && m2 && data2 && data2.length > 0) {
+      // Gráfico comparativo con dos datasets
+      const labels = data1.map(d => `${d.month.substring(0,3)}`);
+      
+      copilotChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: metricNames[m1],
+              data: data1.map(d => d.value),
+              backgroundColor: "rgba(200,16,46,0.5)",
+              borderColor: "#c8102e",
+              borderWidth: 1,
+              order: 2
+            },
+            {
+              label: metricNames[m2],
+              data: data2.map(d => d.value),
+              backgroundColor: "rgba(25,118,210,0.5)",
+              borderColor: "#1976d2",
+              borderWidth: 1,
+              order: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: "bottom", labels: { usePointStyle: true } },
+            title: {
+              display: true,
+              text: `Comparativa: ${metricNames[m1]} vs ${metricNames[m2]}`,
+              font: { size: 13, weight: "bold" }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: false,
+              grid: { color: "rgba(0,0,0,0.06)" }
+            },
+            x: {
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    } else {
+      // Gráfico simple con línea de tendencia
+      const labels = data1.map(d => `${d.month.substring(0,3)}`);
+      
+      copilotChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: `Evolución de ${metricNames[m1]}`,
+            data: data1.map(d => d.value),
+            borderColor: "#c8102e",
+            backgroundColor: "rgba(200,16,46,0.1)",
+            borderWidth: 2,
+            tension: 0.3,
+            fill: true,
+            pointRadius: 5,
+            pointBackgroundColor: "#c8102e"
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: "bottom" },
+            title: {
+              display: true,
+              text: `${metricNames[m1]} – ${selectedYear}`,
+              font: { size: 13, weight: "bold" }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: false,
+              grid: { color: "rgba(0,0,0,0.06)" }
+            },
+            x: {
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  // ================= MEMORIA CONVERSACIONAL =================
+  function addToMemory(query) {
+    conversationMemory.unshift({
+      query: query,
+      timestamp: new Date(),
+      year: selectedYear,
+      quarters: new Set(selectedQuarters)
+    });
+    
+    if (conversationMemory.length > MAX_MEMORY) {
+      conversationMemory.pop();
+    }
+    
+    renderMemoryPanel();
+  }
+
+  function renderMemoryPanel() {
+    const panel = document.getElementById("memoryPanel");
+    
+    if (conversationMemory.length === 0) {
+      panel.innerHTML = '<span style="font-size:11px;color:#999;">Historial reciente:</span> <span style="font-size:11px;color:#ccc;">Sin consultas previas</span>';
+      return;
+    }
+
+    let html = '<span style="font-size:11px;color:#999;">Historial reciente:</span> ';
+    
+    conversationMemory.forEach((item, index) => {
+      const shortQuery = item.query.length > 40 
+        ? item.query.substring(0, 40) + "..." 
+        : item.query;
+      
+      html += `<span class="memory-item" 
+                    onclick="window.replayQuery(${index})" 
+                    title="${item.query} (${item.timestamp.toLocaleTimeString()})">
+                 🕐 ${shortQuery}
+               </span>`;
+    });
+
+    panel.innerHTML = html;
+  }
+
+  window.replayQuery = function(index) {
+    if (index < conversationMemory.length) {
+      const item = conversationMemory[index];
+      document.getElementById("chatInput").value = item.query;
+      window.runCopilot();
+    }
+  };
+
+  // ================= INICIALIZACIÓN =================
+  async function init() {
+    initEventListeners();
+    
+    // Render inicial
+    await renderMainChart("facturacion", "line");
+    await updateAllKPIs();
+    
+    updateFilterButtons();
+    updateContextBadge();
+    renderMemoryPanel();
+
+    console.log("✅ Dashboard Comercial – Mockup Funcional Mejorado inicializado");
+    console.log("📊 Métricas disponibles:", Object.keys(metricNames).join(", "));
+    console.log("🤖 Copilot heurístico con 5 tipos de narrativa activo");
+    console.log("🧠 Memoria conversacional: últimas", MAX_MEMORY, "consultas");
+  }
+
+  // Exponer funciones necesarias al scope global
+  window.setYear = window.setYear;
+  window.toggleQuarter = window.toggleQuarter;
+  window.runCopilot = window.runCopilot;
+  window.replayQuery = window.replayQuery;
+
+  init();
 </script>
 
 </body>
 </html>
-
-
