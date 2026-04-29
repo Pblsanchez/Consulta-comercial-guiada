@@ -1,0 +1,116 @@
+{
+  "app": {
+    "name": "Dashboard Comercial",
+    "version": "2.2.0",
+    "description": "Centro de comando comercial - Frontend desacoplado"
+  },
+  "sections": [
+    {
+      "id": "comercial",
+      "label": "A. Comercial – Objetivos",
+      "icon": "📊",
+      "active": true,
+      "subsections": [
+        {
+          "id": "facturacion",
+          "label": "Facturación",
+          "metrics": ["facturacion", "proyectado", "presupuesto", "cumplimiento_facturacion"],
+          "kpis": [
+            { "metric": "facturacion", "label": "Facturación Real", "unit": "millones ARS", "format": "money", "chartType": "line" },
+            { "metric": "proyectado", "label": "Proyectado", "unit": "millones ARS", "format": "money", "chartType": "line" },
+            { "metric": "presupuesto", "label": "Presupuesto", "unit": "millones ARS", "format": "money", "chartType": "line" },
+            { "metric": "cumplimiento_facturacion", "label": "% Cumplimiento", "unit": "%", "format": "compliance", "chartType": "gauge" }
+          ]
+        },
+        {
+          "id": "cobranzas",
+          "label": "Cobranzas y NC",
+          "metrics": ["dias_calle", "nc_emitidas", "wf_nc_pendientes", "estado_cuenta"],
+          "kpis": [
+            { "metric": "dias_calle", "label": "Días en la Calle", "unit": "días", "format": "number", "chartType": "bar" },
+            { "metric": "nc_emitidas", "label": "NC Emitidas", "unit": "cantidad", "format": "number", "chartType": "bar" },
+            { "metric": "wf_nc_pendientes", "label": "WF NC Pendientes", "unit": "cantidad", "format": "alert", "chartType": "bar" },
+            { "metric": "estado_cuenta", "label": "Cobranzas", "unit": "millones ARS", "format": "money", "chartType": "line" }
+          ]
+        },
+        {
+          "id": "rentabilidad",
+          "label": "Rentabilidad",
+          "metrics": ["rentabilidad"],
+          "kpis": [
+            { "metric": "rentabilidad", "label": "Rentabilidad", "unit": "%", "format": "percentage", "chartType": "line" }
+          ]
+        },
+        {
+          "id": "gestion",
+          "label": "Gestión Comercial",
+          "metrics": ["oportunidades", "pipeline", "relacionamiento"],
+          "kpis": [
+            { "metric": "oportunidades", "label": "Oportunidades", "unit": "cantidad", "format": "number", "chartType": "bar" },
+            { "metric": "pipeline", "label": "Pipeline", "unit": "cantidad", "format": "number", "chartType": "bar" },
+            { "metric": "relacionamiento", "label": "Relacionamiento", "unit": "acciones", "format": "number", "chartType": "bar" }
+          ]
+        },
+        {
+          "id": "cumplimiento",
+          "label": "Cumplimiento Objetivos",
+          "metrics": ["cumplimiento_global", "evolucion_objetivos"],
+          "kpis": [
+            { "metric": "cumplimiento_global", "label": "% Cumplimiento Global", "unit": "%", "format": "compliance", "chartType": "gauge" },
+            { "metric": "evolucion_objetivos", "label": "Evolución Resultados", "unit": "%", "format": "percentage", "chartType": "line" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cartera",
+      "label": "B. Cartera",
+      "icon": "👥",
+      "active": false,
+      "subsections": [
+        {
+          "id": "clientes",
+          "label": "Info del Cliente",
+          "metrics": ["clientes", "documentacion"],
+          "kpis": [
+            { "metric": "clientes", "label": "Clientes Activos", "unit": "cantidad", "format": "number", "chartType": "bar" },
+            { "metric": "documentacion", "label": "Documentación Pendiente", "unit": "cantidad", "format": "number", "chartType": "bar" }
+          ]
+        },
+        {
+          "id": "tkt_gestion",
+          "label": "TKT de Gestión",
+          "metrics": ["tkt_gestion"],
+          "kpis": [
+            { "metric": "tkt_gestion", "label": "Tickets CRM", "unit": "cantidad", "format": "number", "chartType": "bar" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "servicios",
+      "label": "C. Servicios / Productos",
+      "icon": "📦",
+      "active": false,
+      "subsections": [
+        {
+          "id": "servicios_activos",
+          "label": "Servicios",
+          "metrics": ["servicios_activos", "kpi_contrato", "tarifas", "adecuaciones"],
+          "kpis": [
+            { "metric": "servicios_activos", "label": "Servicios Activos", "unit": "cantidad", "format": "number", "chartType": "bar" },
+            { "metric": "kpi_contrato", "label": "KPI x Contrato", "unit": "mixto", "format": "number", "chartType": "bar" },
+            { "metric": "tarifas", "label": "Tarifas", "unit": "cantidad", "format": "number", "chartType": "bar" },
+            { "metric": "adecuaciones", "label": "Adecuaciones", "unit": "cantidad", "format": "number", "chartType": "bar" }
+          ]
+        }
+      ]
+    }
+  ],
+  "copilot": {
+    "enabled": true,
+    "maxMemory": 5,
+    "narrativeTypes": ["crecimiento_saludable", "trade_off", "estancamiento", "caida", "mixto", "comparativa", "alerta", "resumen_seccion"],
+    "contextAware": true
+  }
+}

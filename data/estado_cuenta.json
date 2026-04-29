@@ -1,0 +1,24 @@
+{
+  "metric": "estado_cuenta",
+  "unit": "RESUMEN",
+  "description": "Estado de cuenta – Informe de cobranzas online (resumen mensual)",
+  "granularity": ["year", "quarter", "month"],
+  "data": [
+    { "year": 2025, "quarter": "Q1", "month": "Enero", "value": 38500 },
+    { "year": 2025, "quarter": "Q1", "month": "Febrero", "value": 41000 },
+    { "year": 2025, "quarter": "Q1", "month": "Marzo", "value": 43500 },
+    { "year": 2025, "quarter": "Q2", "month": "Abril", "value": 45000 },
+    { "year": 2025, "quarter": "Q2", "month": "Mayo", "value": 47500 },
+    { "year": 2025, "quarter": "Q2", "month": "Junio", "value": 50000 },
+    { "year": 2025, "quarter": "Q3", "month": "Julio", "value": 48500 },
+    { "year": 2025, "quarter": "Q3", "month": "Agosto", "value": 50500 },
+    { "year": 2025, "quarter": "Q3", "month": "Septiembre", "value": 52500 },
+    { "year": 2025, "quarter": "Q4", "month": "Octubre", "value": 55000 },
+    { "year": 2025, "quarter": "Q4", "month": "Noviembre", "value": 57500 },
+    { "year": 2025, "quarter": "Q4", "month": "Diciembre", "value": 59000 },
+    { "year": 2026, "quarter": "Q1", "month": "Enero", "value": 52500 },
+    { "year": 2026, "quarter": "Q1", "month": "Febrero", "value": 55000 },
+    { "year": 2026, "quarter": "Q1", "month": "Marzo", "value": 57500 },
+    { "year": 2026, "quarter": "Q2", "month": "Abril", "value": 60000 }
+  ]
+}

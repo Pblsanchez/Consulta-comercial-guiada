@@ -1,0 +1,24 @@
+{
+  "metric": "nc_emitidas",
+  "unit": "CANTIDAD",
+  "description": "Notas de crédito emitidas en SAP – Detalle mensual",
+  "granularity": ["year", "quarter", "month"],
+  "data": [
+    { "year": 2025, "quarter": "Q1", "month": "Enero", "value": 18 },
+    { "year": 2025, "quarter": "Q1", "month": "Febrero", "value": 22 },
+    { "year": 2025, "quarter": "Q1", "month": "Marzo", "value": 20 },
+    { "year": 2025, "quarter": "Q2", "month": "Abril", "value": 19 },
+    { "year": 2025, "quarter": "Q2", "month": "Mayo", "value": 24 },
+    { "year": 2025, "quarter": "Q2", "month": "Junio", "value": 21 },
+    { "year": 2025, "quarter": "Q3", "month": "Julio", "value": 23 },
+    { "year": 2025, "quarter": "Q3", "month": "Agosto", "value": 20 },
+    { "year": 2025, "quarter": "Q3", "month": "Septiembre", "value": 25 },
+    { "year": 2025, "quarter": "Q4", "month": "Octubre", "value": 22 },
+    { "year": 2025, "quarter": "Q4", "month": "Noviembre", "value": 19 },
+    { "year": 2025, "quarter": "Q4", "month": "Diciembre", "value": 17 },
+    { "year": 2026, "quarter": "Q1", "month": "Enero", "value": 21 },
+    { "year": 2026, "quarter": "Q1", "month": "Febrero", "value": 18 },
+    { "year": 2026, "quarter": "Q1", "month": "Marzo", "value": 16 },
+    { "year": 2026, "quarter": "Q2", "month": "Abril", "value": 15 }
+  ]
+}

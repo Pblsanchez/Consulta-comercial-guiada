@@ -1,0 +1,24 @@
+{
+  "metric": "wf_nc_pendientes",
+  "unit": "CANTIDAD",
+  "description": "Workflow de Notas de Crédito pendientes de aprobación en SAP",
+  "granularity": ["year", "quarter", "month"],
+  "data": [
+    { "year": 2025, "quarter": "Q1", "month": "Enero", "value": 5 },
+    { "year": 2025, "quarter": "Q1", "month": "Febrero", "value": 7 },
+    { "year": 2025, "quarter": "Q1", "month": "Marzo", "value": 6 },
+    { "year": 2025, "quarter": "Q2", "month": "Abril", "value": 4 },
+    { "year": 2025, "quarter": "Q2", "month": "Mayo", "value": 8 },
+    { "year": 2025, "quarter": "Q2", "month": "Junio", "value": 5 },
+    { "year": 2025, "quarter": "Q3", "month": "Julio", "value": 6 },
+    { "year": 2025, "quarter": "Q3", "month": "Agosto", "value": 4 },
+    { "year": 2025, "quarter": "Q3", "month": "Septiembre", "value": 7 },
+    { "year": 2025, "quarter": "Q4", "month": "Octubre", "value": 5 },
+    { "year": 2025, "quarter": "Q4", "month": "Noviembre", "value": 3 },
+    { "year": 2025, "quarter": "Q4", "month": "Diciembre", "value": 2 },
+    { "year": 2026, "quarter": "Q1", "month": "Enero", "value": 4 },
+    { "year": 2026, "quarter": "Q1", "month": "Febrero", "value": 3 },
+    { "year": 2026, "quarter": "Q1", "month": "Marzo", "value": 2 },
+    { "year": 2026, "quarter": "Q2", "month": "Abril", "value": 1 }
+  ]
+}
