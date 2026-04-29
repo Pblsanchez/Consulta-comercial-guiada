@@ -1,0 +1,29 @@
+{
+  "metric": "oportunidades",
+  "unit": "CANTIDAD",
+  "description": "Oportunidades comerciales activas",
+  "granularity": ["year", "quarter", "month"],
+  "data": [
+    { "year": 2025, "quarter": "Q1", "month": "Enero", "value": 58 },
+    { "year": 2025, "quarter": "Q1", "month": "Febrero", "value": 62 },
+    { "year": 2025, "quarter": "Q1", "month": "Marzo", "value": 65 },
+
+    { "year": 2025, "quarter": "Q2", "month": "Abril", "value": 68 },
+    { "year": 2025, "quarter": "Q2", "month": "Mayo", "value": 72 },
+    { "year": 2025, "quarter": "Q2", "month": "Junio", "value": 75 },
+
+    { "year": 2025, "quarter": "Q3", "month": "Julio", "value": 70 },
+    { "year": 2025, "quarter": "Q3", "month": "Agosto", "value": 74 },
+    { "year": 2025, "quarter": "Q3", "month": "Septiembre", "value": 78 },
+
+    { "year": 2025, "quarter": "Q4", "month": "Octubre", "value": 82 },
+    { "year": 2025, "quarter": "Q4", "month": "Noviembre", "value": 88 },
+    { "year": 2025, "quarter": "Q4", "month": "Diciembre", "value": 90 },
+
+    { "year": 2026, "quarter": "Q1", "month": "Enero", "value": 78 },
+    { "year": 2026, "quarter": "Q1", "month": "Febrero", "value": 82 },
+    { "year": 2026, "quarter": "Q1", "month": "Marzo", "value": 88 },
+
+    { "year": 2026, "quarter": "Q2", "month": "Abril", "value": 92 }
+  ]
+}

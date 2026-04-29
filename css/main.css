@@ -1,0 +1,225 @@
+:root {
+  --andreani-red: #c8102e;
+  --andreani-red-soft: rgba(200, 16, 46, 0.35);
+  --dark: #1a1a1a;
+  --gray: #666;
+  --bg: #f6f7fb;
+  --card-bg: #ffffff;
+}
+
+/* Reset visual fino */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+  background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+  color: var(--dark);
+}
+
+/* ───────── HEADER ───────── */
+header {
+  padding: 18px 28px;
+  background: #fff;
+  border-bottom: 3px solid var(--andreani-red);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 10;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.6px;
+  font-weight: 700;
+}
+
+/* ───────── PAGE ───────── */
+.page {
+  height: calc(100vh - 72px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ───────── TOP ───────── */
+.top {
+  flex: 1;
+  padding: 18px 28px;
+}
+
+.section-title {
+  font-weight: 700;
+  padding: 8px 14px;
+  background: linear-gradient(
+    90deg,
+    var(--andreani-red) 0%,
+    #980b23 100%
+  );
+  color: white;
+  border-radius: 4px;
+  box-shadow: 0 0 12px var(--andreani-red-soft);
+  margin-bottom: 14px;
+  letter-spacing: 0.4px;
+}
+
+/* GRID */
+.grid-2,
+.grid-3 {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.grid-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ───────── BOX KPI ───────── */
+.box {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.08);
+  transition: all 220ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow lateral */
+.box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 0 var(--andreani-red);
+  transition: 220ms;
+}
+
+/* Hover premium */
+.box:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.12),
+    0 0 14px var(--andreani-red-soft);
+}
+
+.box:hover::before {
+  box-shadow: inset 4px 0 0 var(--andreani-red);
+}
+
+/* Títulos KPI */
+.box h3 {
+  margin: 0 0 6px 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.box p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--gray);
+}
+
+/* ───────── CHART ───────── */
+canvas {
+  margin-top: 16px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.1),
+    inset 0 0 0 1px rgba(0,0,0,0.05);
+}
+
+/* ───────── BOTTOM / COPILOT ───────── */
+.bottom {
+  flex: 1;
+  padding: 18px 28px;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f9fafc 100%
+  );
+  border-top: 3px solid var(--andreani-red);
+  box-shadow: inset 0 8px 16px rgba(0,0,0,0.06);
+}
+
+.bottom b {
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+/* Chat */
+.chat-box {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.chat-box input {
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: 200ms;
+}
+
+.chat-box input:focus {
+  outline: none;
+  border-color: var(--andreani-red);
+  box-shadow: 0 0 0 3px var(--andreani-red-soft);
+}
+
+/* Botón Copilot */
+.chat-box button {
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(
+    135deg,
+    var(--andreani-red),
+    #9c0d23
+  );
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px var(--andreani-red-soft);
+  transition: 200ms;
+}
+
+.chat-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--andreani-red-soft);
+}
+
+/* Respuesta Copilot */
+.response {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  border-left: 5px solid var(--andreani-red);
+  font-size: 14px;
+  animation: fadeIn 300ms ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+``

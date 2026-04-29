@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard Comercial – Borrador</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/main.css" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Estilos locales filtros -->
+  <style>
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-sep {
+      margin: 0 6px;
+      font-weight: bold;
+      color: #888;
+    }
+
+    .filter-btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: #c8102e;
+      box-shadow: 0 0 8px rgba(200,16,46,0.3);
+    }
+
+    .filter-btn.active {
+      background: #c8102e;
+      color: white;
+      border-color: #c8102e;
+      box-shadow: 0 0 12px rgba(200,16,46,0.4);
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <h1>DASHBOARD COMERCIAL – BORRADOR</h1>
+</header>
+
+<div class="page">
+
+  <!-- ================= PARTE SUPERIOR ================= -->
+  <div class="top">
+    <div class="section-title">A. COMERCIAL – OBJETIVOS</div>
+
+    <!-- Año + Trimestres -->
+    <div class="filter-group">
+      <button class="filter-btn active" onclick="setYear(2026)">2026</button>
+      <button class="filter-btn" onclick="setYear(2025)">2025</button>
+
+      <span class="filter-sep">|</span>
+
+      <button class="filter-btn" onclick="toggleQuarter('Q1')">Q1</button>
+      <button class="filter-btn" onclick="toggleQuarter('Q2')">Q2</button>
+      <button class="filter-btn" onclick="toggleQuarter('Q3')">Q3</button>
+      <button class="filter-btn" onclick="toggleQuarter('Q4')">Q4</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="grid-2">
+      <div class="box" onclick="renderMainChart('facturacion','line')">
+        <h3>1. Facturación</h3>
+        <p>Facturación mensual</p>
+      </div>
+
+      <div class="box" onclick="renderMainChart('dias_calle','bar')">
+        <h3>2. Días en la Calle</h3>
+        <p>Promedio mensual</p>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="box" onclick="renderMainChart('rentabilidad','line')">
+        <h3>3. Rentabilidad</h3>
+        <p>Margen mensual</p>
+      </div>
+
+      <div class="box" onclick="renderMainChart('oportunidades','bar')">
+        <h3>4. Oportunidades</h3>
+        <p>Oportunidades activas</p>
+      </div>
+
+      <div class="box" onclick="renderMainChart('facturacion','line',true)">
+        <h3>5. Facturación YTD</h3>
+        <p>Evolución histórica</p>
+      </div>
+    </div>
+
+    <canvas id="mainChart" style="max-height:220px;"></canvas>
+  </div>
+
+  <!-- ================= COPILOT ================= -->
+  <div class="bottom">
+    <b>Consulta comercial guiada (Copilot)</b>
+
+    <div class="chat-box">
+      <input
+        id="chatInput"
+        placeholder="Ej: analizar rentabilidad vs facturacion Q2 2025"
+      />
+      <button onclick="runCopilot()">Consultar</button>
+    </div>
+
+    <div id="chatResponse"></div>
+    <canvas id="copilotChart" style="max-height:200px; margin-top:12px;"></canvas>
+  </div>
+
+</div>
+
+<!-- ================= JS PRINCIPAL ================= -->
+<script type="module">
+  import { getMetric } from "./js/dataService.js";
+
+  let mainChart = null;
+  let copilotChart = null;
+
+  let selectedYear = 2026;
+  let selectedQuarters = new Set();
+
+  const metricMap = {
+    facturacion: ["facturacion", "ventas"],
+    rentabilidad: ["rentabilidad", "margen"],
+    dias_calle: ["dias", "cobranza"],
+    oportunidades: ["oportunidades", "pipeline"]
+  };
+
+  // ================= FILTROS =================
+  window.setYear = year => {
+    selectedYear = year;
+    updateButtons();
+    renderMainChart("facturacion","line");
+  };
+
+  window.toggleQuarter = q => {
+    selectedQuarters.has(q) ? selectedQuarters.delete(q) : selectedQuarters.add(q);
+    updateButtons();
+    renderMainChart("facturacion","line");
+  };
+
+  function updateButtons() {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    document.querySelector(`.filter-btn[onclick="setYear(${selectedYear})"]`)?.classList.add("active");
+    selectedQuarters.forEach(q => {
+      document.querySelector(`.filter-btn[onclick="toggleQuarter('${q}')"]`)?.classList.add("active");
+    });
+  }
+
+  // ================= GRAFICO PRINCIPAL =================
+  window.renderMainChart = async function(metric, type, fullHistory=false) {
+    const data = await getMetric(metric);
+    let filtered = data.filter(d => d.year === selectedYear);
+
+    if (!fullHistory && selectedQuarters.size > 0) {
+      filtered = filtered.filter(d => selectedQuarters.has(d.quarter));
+    }
+
+    if (mainChart) mainChart.destroy();
+
+    mainChart = new Chart(document.getElementById("mainChart"), {
+      type,
+      data: {
+        labels: filtered.map(d => d.month),
+        datasets: [{
+          label: metric.toUpperCase(),
+          data: filtered.map(d => d.value),
+          borderColor: "#c8102e",
+          backgroundColor: "rgba(200,16,46,0.25)",
+          tension: 0.3
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom" } }
+      }
+    });
+  };
+
+  // ================= COPILOT =================
+  window.runCopilot = async function() {
+    const text = document.getElementById("chatInput").value.toLowerCase();
+
+    let metrics = Object.keys(metricMap)
+      .filter(m => metricMap[m].some(k => text.includes(k)));
+
+    if (text.includes("2025")) selectedYear = 2025;
+    if (text.includes("2026")) selectedYear = 2026;
+
+    selectedQuarters.clear();
+    ["q1","q2","q3","q4"].forEach(q => {
+      if (text.includes(q)) selectedQuarters.add(q.toUpperCase());
+    });
+
+    const m1 = metrics[0] || "facturacion";
+    const m2 = metrics[1];
+
+    const d1 = await getMetric(m1);
+    const f1 = d1.filter(d =>
+      d.year === selectedYear &&
+      (!selectedQuarters.size || selectedQuarters.has(d.quarter))
+    );
+
+    const avg = f1.reduce((a,b)=>a+b.value,0)/f1.length;
+    const trend = f1.at(-1).value > f1[0].value ? "crecimiento" : "caída";
+
+    document.getElementById("chatResponse").innerHTML = `
+      <div class="response">
+        <b>Copilot:</b><br><br>
+        El análisis muestra <b>${trend}</b> en <b>${m1}${m2 ? " vs " + m2 : ""}</b>
+        para ${selectedQuarters.size ? [...selectedQuarters].join(", ") : "el año completo"} ${selectedYear}.<br>
+        Promedio del período: <b>${avg.toFixed(1)}</b>.
+      </div>
+    `;
+
+    if (copilotChart) copilotChart.destroy();
+
+    copilotChart = new Chart(document.getElementById("copilotChart"), {
+      type: "line",
+      data: {
+        labels: f1.map(d => d.month),
+        datasets: [{
+          label: "Análisis Copilot",
+          data: f1.map(d => d.value),
+          borderColor: "#c8102e",
+          tension: 0.3
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom" } }
+      }
+    });
+
+    updateButtons();
+  };
+
+  // Render inicial
+  renderMainChart("facturacion","line");
+</script>
+
+</body>
+</html>
+
+
