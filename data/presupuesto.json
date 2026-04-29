@@ -1,0 +1,26 @@
+{
+  "metric": "presupuesto",
+  "unit": "ARS_MILLONES",
+  "description": "Presupuesto mensual de facturación – Comparación contra Facturación real y Proyectado",
+  "granularity": ["year", "quarter", "month"],
+  "data": [
+    { "year": 2025, "quarter": "Q1", "month": "Enero", "value": 44000 },
+    { "year": 2025, "quarter": "Q1", "month": "Febrero", "value": 44000 },
+    { "year": 2025, "quarter": "Q1", "month": "Marzo", "value": 47000 },
+    { "year": 2025, "quarter": "Q2", "month": "Abril", "value": 47000 },
+    { "year": 2025, "quarter": "Q2", "month": "Mayo", "value": 50000 },
+    { "year": 2025, "quarter": "Q2", "month": "Junio", "value": 50000 },
+    { "year": 2025, "quarter": "Q3", "month": "Julio", "value": 52000 },
+    { "year": 2025, "quarter": "Q3", "month": "Agosto", "value": 52000 },
+    { "year": 2025, "quarter": "Q3", "month": "Septiembre", "value": 55000 },
+    { "year": 2025, "quarter": "Q4", "month": "Octubre", "value": 55000 },
+    { "year": 2025, "quarter": "Q4", "month": "Noviembre", "value": 58000 },
+    { "year": 2025, "quarter": "Q4", "month": "Diciembre", "value": 58000 },
+    { "year": 2026, "quarter": "Q1", "month": "Enero", "value": 57000 },
+    { "year": 2026, "quarter": "Q1", "month": "Febrero", "value": 57000 },
+    { "year": 2026, "quarter": "Q1", "month": "Marzo", "value": 60000 },
+    { "year": 2026, "quarter": "Q2", "month": "Abril", "value": 62000 },
+    { "year": 2026, "quarter": "Q2", "month": "Mayo", "value": 64000 },
+    { "year": 2026, "quarter": "Q2", "month": "Junio", "value": 65000 }
+  ]
+}

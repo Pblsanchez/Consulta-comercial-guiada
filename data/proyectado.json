@@ -1,0 +1,26 @@
+{
+  "metric": "proyectado",
+  "unit": "ARS_MILLONES",
+  "description": "Proyección automática de facturación (Q envíos x Precio Promedio x Días mes + adecuación editable 3 meses)",
+  "granularity": ["year", "quarter", "month"],
+  "data": [
+    { "year": 2025, "quarter": "Q1", "month": "Enero", "value": 43000 },
+    { "year": 2025, "quarter": "Q1", "month": "Febrero", "value": 45000 },
+    { "year": 2025, "quarter": "Q1", "month": "Marzo", "value": 47500 },
+    { "year": 2025, "quarter": "Q2", "month": "Abril", "value": 49000 },
+    { "year": 2025, "quarter": "Q2", "month": "Mayo", "value": 51500 },
+    { "year": 2025, "quarter": "Q2", "month": "Junio", "value": 54000 },
+    { "year": 2025, "quarter": "Q3", "month": "Julio", "value": 52500 },
+    { "year": 2025, "quarter": "Q3", "month": "Agosto", "value": 54500 },
+    { "year": 2025, "quarter": "Q3", "month": "Septiembre", "value": 56500 },
+    { "year": 2025, "quarter": "Q4", "month": "Octubre", "value": 59000 },
+    { "year": 2025, "quarter": "Q4", "month": "Noviembre", "value": 61500 },
+    { "year": 2025, "quarter": "Q4", "month": "Diciembre", "value": 63000 },
+    { "year": 2026, "quarter": "Q1", "month": "Enero", "value": 56500 },
+    { "year": 2026, "quarter": "Q1", "month": "Febrero", "value": 59000 },
+    { "year": 2026, "quarter": "Q1", "month": "Marzo", "value": 61500 },
+    { "year": 2026, "quarter": "Q2", "month": "Abril", "value": 64000 },
+    { "year": 2026, "quarter": "Q2", "month": "Mayo", "value": 66000 },
+    { "year": 2026, "quarter": "Q2", "month": "Junio", "value": 68000 }
+  ]
+}
