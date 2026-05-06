@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard Comercial – v2.2</title>
+  <title>Dashboard Comercial – v2.3</title>
   <link rel="stylesheet" href="css/main.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
@@ -25,7 +25,7 @@
       display: flex; align-items: center;
     }
     header h1 { margin: 0; font-size: 20px; font-weight: 700; }
-    .page { height: calc(100vh - 60px); display: flex; flex-direction: column; }
+    .page { height: calc(100vh - 112px); display: flex; flex-direction: column; }
 
     .main-tabs { display: flex; gap: 0; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 0 28px; }
     .main-tab {
@@ -112,6 +112,21 @@
     .alert-count.medium { background: #fff3e0; color: var(--orange); }
     .alert-count.low { background: #e8f5e9; color: var(--green); }
 
+    .dual-kpi {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .dual-left { flex: 1; }
+    .dual-right {
+      text-align: center;
+      padding-left: 14px;
+      border-left: 2px solid #e0e0e0;
+      min-width: 90px;
+    }
+    .dual-right h3 { font-size: 12px; color: #888; margin: 0 0 4px 0; }
+    .dual-right .kpi-value { font-size: 22px; color: var(--green); }
+
     .chart-container { position: relative; margin-top: 10px; }
     .chart-container canvas {
       background: #fff; border-radius: 10px; padding: 10px;
@@ -151,13 +166,62 @@
     .alert-badge.green { background: #e8f5e9; color: #2e7d32; }
     .alert-badge.yellow { background: #fff3e0; color: #e65100; }
     .alert-badge.red { background: #ffebee; color: var(--red); }
+
+    .copilot-collapsed {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: #fff;
+      border-top: 3px solid var(--red);
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+      transition: all 350ms cubic-bezier(0.4, 0, 0.2, 1);
+      height: 52px;
+      overflow: hidden;
+    }
+    .copilot-collapsed.expanded {
+      height: 55vh;
+      min-height: 400px;
+    }
+    .copilot-toggle-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 28px;
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(135deg, var(--red), #9c0d23);
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .copilot-toggle-bar:hover {
+      background: linear-gradient(135deg, #d01232, #a80e26);
+    }
+    .copilot-toggle-icon {
+      font-size: 18px;
+      transition: transform 350ms ease;
+    }
+    .copilot-collapsed.expanded .copilot-toggle-icon {
+      transform: rotate(180deg);
+    }
+    .copilot-body {
+      padding: 0 28px 14px 28px;
+      max-height: calc(55vh - 52px);
+      overflow-y: auto;
+      background: linear-gradient(180deg, #ffffff 0%, #f9fafc 100%);
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>DASHBOARD COMERCIAL</h1>
-  <span style="font-size:11px;color:#888;margin-left:10px;">Centro de Comando v2.2 – Cobranzas</span>
+  <div style="display:flex;align-items:center;flex:1;">
+    <h1>DASHBOARD COMERCIAL</h1>
+    <span style="font-size:11px;color:#888;margin-left:10px;">Centro de Comando v2.3 – Datos Reales</span>
+  </div>
+  <a href="doc/guia-usuario.html" target="_blank" style="text-decoration:none;background:#fff;color:var(--red);border:2px solid var(--red);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;transition:all 0.2s ease;white-space:nowrap;" onmouseover="this.style.background='var(--red)';this.style.color='#fff';" onmouseout="this.style.background='#fff';this.style.color='var(--red)';">📖 Guía de Usuario</a>
 </header>
 
 <nav class="main-tabs" id="mainTabs"></nav>
@@ -186,18 +250,23 @@
     <div class="chart-legend-custom" id="chartLegendCustom"></div>
   </div>
 
-  <div class="bottom">
-    <b>Consulta comercial guiada (Copilot heurístico)</b>
-    <div id="memoryPanel" style="margin-top:6px;min-height:20px;">
-      <span style="font-size:10px;color:#999;">Historial reciente:</span>
+  <div class="copilot-collapsed" id="copilotPanel">
+    <div class="copilot-toggle-bar" onclick="window.toggleCopilot()">
+      <span>💬 Consulta comercial guiada (Copilot heurístico)</span>
+      <span class="copilot-toggle-icon" id="copilotToggleIcon">▲</span>
     </div>
-    <div class="chat-box">
-      <input id="chatInput" placeholder="Ej: cómo están las NC pendientes en Q1 2026" onkeypress="if(event.key==='Enter') window.runCopilot()" />
-      <button onclick="window.runCopilot()">Consultar</button>
-    </div>
-    <div id="chatResponse"></div>
-    <div class="chart-container" style="height:200px; margin-top:10px;">
-      <canvas id="copilotChart"></canvas>
+    <div class="copilot-body">
+      <div id="memoryPanel" style="margin-top:6px;min-height:20px;">
+        <span style="font-size:10px;color:#999;">Historial reciente:</span>
+      </div>
+      <div class="chat-box">
+        <input id="chatInput" placeholder="Ej: cómo están las NC pendientes en Q1 2026" onkeypress="if(event.key==='Enter') window.runCopilot()" />
+        <button onclick="window.runCopilot()">Consultar</button>
+      </div>
+      <div id="chatResponse"></div>
+      <div class="chart-container" style="height:200px; margin-top:10px;">
+        <canvas id="copilotChart"></canvas>
+      </div>
     </div>
   </div>
 </div>
@@ -222,7 +291,11 @@
     evolucion_objetivos:"Evolución Resultados",clientes:"Clientes Activos",
     documentacion:"Documentación Pendiente",tkt_gestion:"Tickets CRM",
     servicios_activos:"Servicios Activos",kpi_contrato:"KPI x Contrato",
-    tarifas:"Tarifas",adecuaciones:"Adecuaciones"
+    tarifas:"Tarifas",adecuaciones:"Adecuaciones",
+    envios:"Envíos (miles)",ingreso_promedio:"Ingreso Promedio",
+    ip_b2b:"IP B2B",ip_b2c:"IP B2C",
+    adecuacion_real:"Adecuación Real",adecuacion_ppto:"Adecuación Ppto",
+    clientes_cantidad:"Cantidad Clientes",dias_habiles:"Días Hábiles"
   };
 
   const metricUnits = {
@@ -232,7 +305,9 @@
     oportunidades:"cantidad",pipeline:"cantidad",relacionamiento:"acciones",
     cumplimiento_global:"%",evolucion_objetivos:"%",clientes:"cantidad",
     documentacion:"cantidad",tkt_gestion:"cantidad",servicios_activos:"cantidad",
-    kpi_contrato:"mixto",tarifas:"cantidad",adecuaciones:"cantidad"
+    kpi_contrato:"mixto",tarifas:"cantidad",adecuaciones:"cantidad",
+    envios:"miles",ingreso_promedio:"$ ARS",ip_b2b:"$ ARS",ip_b2c:"$ ARS",
+    adecuacion_real:"%",adecuacion_ppto:"%",clientes_cantidad:"cantidad",dias_habiles:"días"
   };
 
   const metricKeywords = {
@@ -246,6 +321,14 @@
     estado_cuenta:["cobranzas","cobranza","estado de cuenta","cobrado"],
     rentabilidad:["rentabilidad","margen"],
     oportunidades:["oportunidades","pipeline","opp"],
+    envios:["envíos","envios","envío","envio","volumen"],
+    ingreso_promedio:["ingreso promedio","precio promedio","ip total"],
+    ip_b2b:["ip b2b","precio b2b","ingreso b2b"],
+    ip_b2c:["ip b2c","precio b2c","ingreso b2c"],
+    adecuacion_real:["adecuación","adecuacion","reajuste"],
+    adecuacion_ppto:["adecuación presupuesto","adecuacion ppto"],
+    clientes_cantidad:["clientes","cantidad clientes","cartera"],
+    dias_habiles:["días hábiles","dias habiles","hábiles"]
   };
 
   const chartColors = {
@@ -256,6 +339,11 @@
     nc_emitidas:{border:"#e67e22",bg:"rgba(230,126,34,0.2)"},
     wf_nc_pendientes:{border:"#c8102e",bg:"rgba(200,16,46,0.2)"},
     estado_cuenta:{border:"#27ae60",bg:"rgba(39,174,96,0.15)"},
+    envios:{border:"#6c5ce7",bg:"rgba(108,92,231,0.15)"},
+    ingreso_promedio:{border:"#00b894",bg:"rgba(0,184,148,0.15)"},
+    ip_b2b:{border:"#e17055",bg:"rgba(225,112,85,0.15)"},
+    ip_b2c:{border:"#0984e3",bg:"rgba(9,132,227,0.15)"},
+    adecuacion_real:{border:"#fdcb6e",bg:"rgba(253,203,110,0.2)"},
   };
 
   async function loadConfig() {
@@ -267,15 +355,21 @@
     return { sections: [{ id:"comercial",label:"A. Comercial – Objetivos", subsections:[
       { id:"facturacion",label:"Facturación",kpis:[
         {metric:"facturacion",label:"Facturación",unit:"millones ARS",format:"money",chartType:"line"},
-        {metric:"proyectado",label:"Proyectado",unit:"millones ARS",format:"money",chartType:"line"},
-        {metric:"presupuesto",label:"Presupuesto",unit:"millones ARS",format:"money",chartType:"line"},
-        {metric:"cumplimiento_facturacion",label:"% Cumplimiento",unit:"%",format:"compliance",chartType:"gauge"}
+        {metric:"envios",label:"Envíos (miles)",unit:"miles",format:"number",chartType:"bar"},
+        {metric:"cumplimiento_facturacion",label:"% Cumplimiento",unit:"%",format:"compliance",chartType:"gauge"},
+        {metric:"adecuacion_real",label:"Adecuación Real",unit:"%",format:"percentage",chartType:"line"}
       ]},
       { id:"cobranzas",label:"Cobranzas y NC",kpis:[
         {metric:"dias_calle",label:"Días en la Calle",unit:"días",format:"number",chartType:"bar"},
         {metric:"nc_emitidas",label:"NC Emitidas",unit:"cantidad",format:"number",chartType:"bar"},
         {metric:"wf_nc_pendientes",label:"WF NC Pendientes",unit:"cantidad",format:"alert",chartType:"bar"},
         {metric:"estado_cuenta",label:"Cobranzas",unit:"millones ARS",format:"money",chartType:"line"}
+      ]},
+      { id:"gestion",label:"Gestión Comercial",kpis:[
+        {metric:"oportunidades",label:"Oportunidades",unit:"cantidad",format:"number",chartType:"bar"},
+        {metric:"pipeline",label:"Pipeline",unit:"cantidad",format:"number",chartType:"bar"},
+        {metric:"relacionamiento",label:"Relacionamiento",unit:"acciones",format:"number",chartType:"bar"},
+        {metric:"clientes_cantidad",label:"Cantidad Clientes",unit:"cantidad",format:"number",chartType:"line"}
       ]}
     ]}]};
   }
@@ -306,6 +400,21 @@
       }
       if(kpi.format==="alert"){
         return `<div class="box alert-kpi" data-metric="${kpi.metric}" data-chart-type="${kpi.chartType||'bar'}" onclick="window.selectMetric('${kpi.metric}','${kpi.chartType||'bar'}')"><h3>${kpi.label} <span class="alert-count" id="alert-${kpi.metric}">—</span></h3><div class="kpi-value" id="kpi-${kpi.metric}">—</div><div class="kpi-variation" id="kpi-${kpi.metric}-var">—</div><p>${kpi.unit}</p></div>`;
+      }
+      if(kpi.metric==='facturacion'){
+        return `<div class="box dual-kpi ${kpi.metric===currentMainMetric?'selected':''}" data-metric="${kpi.metric}" data-chart-type="${kpi.chartType||'line'}" onclick="window.selectMetric('${kpi.metric}','${kpi.chartType||'line'}')">
+          <div class="dual-left">
+            <h3>${kpi.label}</h3>
+            <div class="kpi-value" id="kpi-${kpi.metric}">—</div>
+            <div class="kpi-variation" id="kpi-${kpi.metric}-var">—</div>
+            <p>${kpi.unit}</p>
+          </div>
+          <div class="dual-right">
+            <h3>Rentabilidad</h3>
+            <div class="kpi-value" id="kpi-sub-rentabilidad">—</div>
+            <p>% margen</p>
+          </div>
+        </div>`;
       }
       return `<div class="box ${kpi.metric===currentMainMetric?'selected':''}" data-metric="${kpi.metric}" data-chart-type="${kpi.chartType||'line'}" onclick="window.selectMetric('${kpi.metric}','${kpi.chartType||'line'}')"><h3>${kpi.label}</h3><div class="kpi-value" id="kpi-${kpi.metric}">—</div><div class="kpi-variation" id="kpi-${kpi.metric}-var">—</div><p>${kpi.unit}</p></div>`;
     }).join("");
@@ -362,6 +471,7 @@
       if(!all?.length)return[];
       let f=filterByYear(all,selectedYear);
       if(selectedQuarters.size)f=filterByQuarters(f,selectedYear,selectedQuarters);
+      f=f.filter(d=>d.value!==0);
       return f;
     }catch{return[];}
   }
@@ -407,19 +517,30 @@
     }else{
       let formatted;
       if(unit==="millones ARS")formatted=`$${(lastVal/1000).toFixed(1)}K`;
+      else if(unit==="$ ARS")formatted=`$${lastVal.toFixed(0)}`;
       else if(unit==="%")formatted=`${lastVal.toFixed(1)}%`;
       else if(unit==="días")formatted=`${lastVal.toFixed(0)} días`;
+      else if(unit==="miles")formatted=`${(lastVal/1000).toFixed(1)}K`;
       else formatted=lastVal.toFixed(0);
       valEl.textContent=formatted;
+    }
+
+    if(kpi.metric==="facturacion"){
+      const rentData=await getFilteredData("rentabilidad");
+      if(rentData.length){
+        const rentLast=rentData[rentData.length-1].value;
+        const subEl=document.getElementById("kpi-sub-rentabilidad");
+        if(subEl)subEl.textContent=`${rentLast.toFixed(1)}%`;
+      }
     }
 
     const varEl=document.getElementById(`kpi-${kpi.metric}-var`);
     if(varEl&&data.length>=2){
       const firstVal=data[0].value;
-      const variation=((lastVal-firstVal)/firstVal)*100;
+      const variation=firstVal!==0?((lastVal-firstVal)/firstVal)*100:0;
       let cls,arrow;
-      if(variation>0.5){cls=kpi.metric==="dias_calle"||kpi.metric==="wf_nc_pendientes"?"positive":"positive";arrow="▲";}
-      else if(variation<-0.5){cls=kpi.metric==="dias_calle"||kpi.metric==="wf_nc_pendientes"?"positive":"negative";arrow="▼";}
+      if(variation>0.5){cls="positive";arrow="▲";}
+      else if(variation<-0.5){cls="negative";arrow="▼";}
       else{cls="neutral";arrow="◆";}
       varEl.textContent=`${arrow} ${variation>=0?'+':''}${variation.toFixed(1)}% vs inicio`;
       varEl.className=`kpi-variation ${cls}`;
@@ -504,18 +625,17 @@
     const name1=metricNames[m1]||m1;
     const period=selectedQuarters.size?`${[...selectedQuarters].sort().join(", ")} ${selectedYear}`:`el año ${selectedYear}`;
 
-    // Alerta especial para WF NC Pendientes
     if(m1==="wf_nc_pendientes"){
       const last=data1[data1.length-1].value;
       const sev=last>=7?"crítico":last>=4?"medio":"bajo";
       const icon=last>=7?"🔴":last>=4?"🟡":"🟢";
-      return `<div class="response"><b>Copilot ${icon}:</b><br><br>📊 <b>${name1}</b> en ${period}: <b>${last} pendientes</b> (nivel ${sev}).<br>${last>=4?'⚠️ Se recomienda agilizar las aprobaciones para reducir el backlog.':'✅ El nivel de pendientes está controlado.'}</div>`;
+      return `<div class="response"><b>Copilot ${icon}:</b><br><br>📊 <b>${name1}</b> en ${period}: <b>${last} pendientes</b> (nivel ${sev}).<br>${last>=4?'⚠️ Se recomienda agilizar las aprobaciones.':'✅ El nivel de pendientes está controlado.'}</div>`;
     }
 
     if(isComparison&&m1==="dias_calle"&&m2==="nc_emitidas"&&data2?.length){
       const dcAvg=averageValue(data1).toFixed(1);
       const ncAvg=averageValue(data2).toFixed(1);
-      return `<div class="response"><b>Copilot:</b><br><br>📊 Relación <b>Días en la Calle vs NC Emitidas</b> en ${period}:<br>• Días promedio: <b>${dcAvg} días</b><br>• NC promedio: <b>${ncAvg} por mes</b><br><br>Una reducción de NC suele correlacionar con menor tiempo de cobranza.</div>`;
+      return `<div class="response"><b>Copilot:</b><br><br>📊 Relación <b>Días en la Calle vs NC Emitidas</b> en ${period}:<br>• Días promedio: <b>${dcAvg} días</b><br>• NC promedio: <b>${ncAvg} por mes</b></div>`;
     }
 
     const avg1=averageValue(data1).toFixed(1);
@@ -536,8 +656,10 @@
     const u=metricUnits[metric]||"";
     const n=parseFloat(v);
     if(u==="millones ARS")return`$${n.toFixed(1)} M`;
+    if(u==="$ ARS")return`$${n.toFixed(0)}`;
     if(u==="%")return`${n.toFixed(1)}%`;
     if(u==="días")return`${n.toFixed(0)} días`;
+    if(u==="miles")return`${(n/1000).toFixed(1)}K`;
     return n.toFixed(0);
   }
 
@@ -563,6 +685,20 @@
 
   window.replayQuery=function(i){if(i<conversationMemory.length){document.getElementById("chatInput").value=conversationMemory[i].query;window.runCopilot();}};
 
+  let copilotExpanded = false;
+  window.toggleCopilot = function() {
+    copilotExpanded = !copilotExpanded;
+    const panel = document.getElementById("copilotPanel");
+    const icon = document.getElementById("copilotToggleIcon");
+    if (copilotExpanded) {
+      panel.classList.add("expanded");
+      icon.textContent = "▼";
+    } else {
+      panel.classList.remove("expanded");
+      icon.textContent = "▲";
+    }
+  };
+
   async function init(){
     await loadConfig();
     renderMainTabs();renderSubTabs();renderSectionContent();
@@ -570,7 +706,7 @@
     document.querySelectorAll(".filter-btn[data-quarter]").forEach(b=>b.addEventListener("click",()=>window.toggleQuarter(b.dataset.quarter)));
     await window.renderMainChart();
     updateFilterButtons();updateContextBadge();addToMemory("");
-    console.log("✅ Dashboard v2.2 – Cobranzas + NC + WF + Estado de cuenta");
+    console.log("✅ Dashboard v2.3 – Datos reales + Rentabilidad integrada");
   }
 
   window.setYear=window.setYear;window.toggleQuarter=window.toggleQuarter;

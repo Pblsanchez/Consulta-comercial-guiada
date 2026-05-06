@@ -1,29 +1,24 @@
-{
+﻿{
   "metric": "dias_calle",
   "unit": "DIAS",
   "description": "Promedio de días en la calle",
   "granularity": ["year", "quarter", "month"],
   "data": [
-    { "year": 2025, "quarter": "Q1", "month": "Enero", "value": 17 },
-    { "year": 2025, "quarter": "Q1", "month": "Febrero", "value": 16 },
-    { "year": 2025, "quarter": "Q1", "month": "Marzo", "value": 16 },
-
-    { "year": 2025, "quarter": "Q2", "month": "Abril", "value": 15 },
-    { "year": 2025, "quarter": "Q2", "month": "Mayo", "value": 15 },
-    { "year": 2025, "quarter": "Q2", "month": "Junio", "value": 14 },
-
-    { "year": 2025, "quarter": "Q3", "month": "Julio", "value": 15 },
-    { "year": 2025, "quarter": "Q3", "month": "Agosto", "value": 14 },
-    { "year": 2025, "quarter": "Q3", "month": "Septiembre", "value": 14 },
-
-    { "year": 2025, "quarter": "Q4", "month": "Octubre", "value": 14 },
-    { "year": 2025, "quarter": "Q4", "month": "Noviembre", "value": 13 },
-    { "year": 2025, "quarter": "Q4", "month": "Diciembre", "value": 13 },
-
-    { "year": 2026, "quarter": "Q1", "month": "Enero", "value": 15 },
-    { "year": 2026, "quarter": "Q1", "month": "Febrero", "value": 14 },
-    { "year": 2026, "quarter": "Q1", "month": "Marzo", "value": 14 },
-
-    { "year": 2026, "quarter": "Q2", "month": "Abril", "value": 13 }
+    { "year": 2025, "quarter": "Q1", "month": "Enero", "value": 39.6 },
+    { "year": 2025, "quarter": "Q1", "month": "Febrero", "value": 34.9 },
+    { "year": 2025, "quarter": "Q1", "month": "Marzo", "value": 39.6 },
+    { "year": 2025, "quarter": "Q2", "month": "Abril", "value": 34.5 },
+    { "year": 2025, "quarter": "Q2", "month": "Mayo", "value": 36.2 },
+    { "year": 2025, "quarter": "Q2", "month": "Junio", "value": 34.9 },
+    { "year": 2025, "quarter": "Q3", "month": "Julio", "value": 38.4 },
+    { "year": 2025, "quarter": "Q3", "month": "Agosto", "value": 36.2 },
+    { "year": 2025, "quarter": "Q3", "month": "Septiembre", "value": 37.2 },
+    { "year": 2025, "quarter": "Q4", "month": "Octubre", "value": 41.1 },
+    { "year": 2025, "quarter": "Q4", "month": "Noviembre", "value": 39.6 },
+    { "year": 2025, "quarter": "Q4", "month": "Diciembre", "value": 39.3 },
+    { "year": 2026, "quarter": "Q1", "month": "Enero", "value": 40.2 },
+    { "year": 2026, "quarter": "Q1", "month": "Febrero", "value": 36.8 },
+    { "year": 2026, "quarter": "Q1", "month": "Marzo", "value": 44.9 },
+    { "year": 2026, "quarter": "Q2", "month": "Abril", "value": 0 }
   ]
 }

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía de Usuario – Dashboard Comercial</title>
+  <style>
+    :root {
+      --red: #c8102e;
+      --dark: #1a1a1a;
+      --gray: #555;
+      --bg: #f9fafc;
+      --card: #fff;
+      --border: #e0e0e0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      line-height: 1.7;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 40px 48px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 28px;
+      border-bottom: 4px solid var(--red);
+      padding-bottom: 12px;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: 20px;
+      margin-top: 36px;
+      margin-bottom: 12px;
+      color: var(--red);
+      border-left: 4px solid var(--red);
+      padding-left: 12px;
+    }
+    h3 {
+      font-size: 16px;
+      margin-top: 24px;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+    p, li { font-size: 14px; color: var(--gray); }
+    ul { padding-left: 20px; margin-bottom: 12px; }
+    li { margin-bottom: 4px; }
+    .subtitle { font-size: 14px; color: #888; margin-bottom: 24px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 20px 0;
+      font-size: 13px;
+    }
+    th {
+      background: var(--red);
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:hover td { background: #fef5f5; }
+    .highlight {
+      background: #fff3e0;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border-left: 4px solid #e67e22;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .feature-card {
+      background: #f9fafc;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .feature-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--dark);
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+    .badge-green { background: #e8f5e9; color: #2e7d32; }
+    .badge-yellow { background: #fff3e0; color: #e65100; }
+    .badge-red { background: #ffebee; color: #c8102e; }
+    .badge-blue { background: #e3f2fd; color: #1565c0; }
+    footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 20px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      table { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>📊 Dashboard Comercial</h1>
+  <p class="subtitle">Guía de Usuario · Versión 2.3 · Mayo 2026</p>
+
+  <h2>🏠 Vista general</h2>
+  <p>Al abrir el dashboard, se muestra la sección <strong>A. Comercial – Objetivos</strong> con filtros de año y trimestre en la parte superior, las tarjetas de KPIs en el centro y el gráfico principal debajo.</p>
+  <p>El <strong>Copilot</strong> está colapsado como una barra roja al pie de la pantalla. Al hacer clic en la barra, se despliega el panel de consulta guiada. Al cerrarlo, se recupera todo el espacio para visualizar los gráficos.</p>
+  <p>Los filtros por año (<strong>2025, 2026</strong>) y trimestre (<strong>Q1, Q2, Q3, Q4</strong>) se aplican en tiempo real a todos los KPIs y gráficos. Si no se selecciona ningún trimestre, se muestra la vista anual completa.</p>
+
+  <h2>📁 Sección A: COMERCIAL – OBJETIVOS</h2>
+
+  <h3>🔹 Subsección: Facturación</h3>
+  <p>Subsección principal. Muestra los indicadores clave de desempeño comercial y un gráfico con tres líneas superpuestas para comparar visualmente la evolución.</p>
+
+  <table>
+    <tr><th>KPI</th><th>Qué muestra</th><th>Cálculo</th><th>Para qué sirve</th></tr>
+    <tr>
+      <td><strong>Facturación Real</strong></td>
+      <td>Valor de facturación mensual total en millones de ARS</td>
+      <td>Dato directo del sistema de facturación</td>
+      <td>Ver la evolución real de ventas mes a mes y detectar estacionalidad</td>
+    </tr>
+    <tr>
+      <td><strong>Rentabilidad</strong></td>
+      <td>Porcentaje de margen neto</td>
+      <td>Renta por cuenta %</td>
+      <td>Medir si la facturación se traduce en ganancia. Integrado dentro de la card de Facturación</td>
+    </tr>
+    <tr>
+      <td><strong>Envíos (miles)</strong></td>
+      <td>Volumen de envíos en miles de unidades</td>
+      <td>Dato directo de envíos</td>
+      <td>Entender la demanda operativa real y dimensionar recursos</td>
+    </tr>
+    <tr>
+      <td><strong>% Cumplimiento</strong></td>
+      <td>Porcentaje del presupuesto alcanzado en el período</td>
+      <td>Facturación Real / Presupuesto × 100</td>
+      <td><span class="badge badge-green">>95%</span> <span class="badge badge-yellow">85-95%</span> <span class="badge badge-red"><85%</span> Evaluar si estamos dentro del objetivo comercial</td>
+    </tr>
+    <tr>
+      <td><strong>IP B2B</strong></td>
+      <td>Ingreso promedio por envío corporativo en $ ARS</td>
+      <td>Facturación B2B / Envíos B2B</td>
+      <td>Monitorear el precio de los envíos corporativos</td>
+    </tr>
+    <tr>
+      <td><strong>IP B2C</strong></td>
+      <td>Ingreso promedio por envío a consumidor en $ ARS</td>
+      <td>Facturación B2C / Envíos B2C</td>
+      <td>Monitorear el precio de los envíos a consumidor final</td>
+    </tr>
+    <tr>
+      <td><strong>Adecuación Real</strong></td>
+      <td>Porcentaje acumulado de adecuación tarifaria aplicada</td>
+      <td>Dato directo de adecuaciones</td>
+      <td>Controlar el impacto de ajustes de tarifas</td>
+    </tr>
+  </table>
+
+  <p><strong>📈 Gráfico principal:</strong> Tres líneas superpuestas con leyenda:</p>
+  <ul>
+    <li>🔴 <strong>Facturación Real</strong> (línea sólida roja)</li>
+    <li>🟠 <strong>Proyectado</strong> (línea punteada naranja): previsión automática basada en envíos, precio promedio y días del mes</li>
+    <li>⚫ <strong>Presupuesto</strong> (línea de puntos gris): objetivo comercial definido</li>
+  </ul>
+  <p>Permite responder preguntas como: ¿vamos en línea con el presupuesto? ¿el proyectado anticipa un desvío?</p>
+
+  <h3>🔹 Subsección: Cobranzas y NC</h3>
+  <p>Indicadores para monitorear la salud financiera de la cartera y la eficiencia operativa del ciclo de cobro.</p>
+
+  <table>
+    <tr><th>KPI</th><th>Qué muestra</th><th>Cálculo</th><th>Para qué sirve</th></tr>
+    <tr>
+      <td><strong>Días en la Calle</strong></td>
+      <td>Días promedio que tarda en cobrarse una factura</td>
+      <td>Dato directo de cobranzas</td>
+      <td>Medir eficiencia de cobro. Más días = más capital inmovilizado. Tendencia bajista = positiva</td>
+    </tr>
+    <tr>
+      <td><strong>NC Emitidas</strong></td>
+      <td>Cantidad de Notas de Crédito emitidas por mes</td>
+      <td>Dato directo de SAP</td>
+      <td>Identificar problemas de facturación o disconformidades que generan NC</td>
+    </tr>
+    <tr>
+      <td><strong>WF NC Pendientes</strong></td>
+      <td>Notas de Crédito pendientes de aprobación en workflow</td>
+      <td>Dato directo de SAP</td>
+      <td><span class="badge badge-green">0-3 Bajo</span> <span class="badge badge-yellow">4-6 Medio</span> <span class="badge badge-red">7+ Crítico</span> Alerta temprana de cuellos de botella</td>
+    </tr>
+    <tr>
+      <td><strong>Cobranzas</strong></td>
+      <td>Monto total cobrado en millones de ARS</td>
+      <td>Dato directo de estado de cuenta</td>
+      <td>Seguimiento del flujo de caja real ingresado</td>
+    </tr>
+  </table>
+
+  <p><strong>📈 Gráfico principal:</strong> Doble eje para ver correlación:</p>
+  <ul>
+    <li>🔵 <strong>Días en la Calle</strong> (eje izquierdo, azul)</li>
+    <li>🟢 <strong>Cobranzas en $</strong> (eje derecho, verde)</li>
+  </ul>
+  <p>Si Días en la Calle baja y Cobranzas sube, el ciclo de cobro está mejorando.</p>
+
+  <h3>🔹 Subsección: Gestión Comercial</h3>
+  <p>KPIs para medir la actividad del equipo comercial y la evolución de la cartera de clientes.</p>
+
+  <table>
+    <tr><th>KPI</th><th>Qué muestra</th><th>Cálculo</th><th>Para qué sirve</th></tr>
+    <tr>
+      <td><strong>Oportunidades</strong></td>
+      <td>Cantidad de oportunidades comerciales activas</td>
+      <td>Dato directo de CRM</td>
+      <td>Medir la salud del pipeline. Si bajan, puede anticipar caída de facturación futura</td>
+    </tr>
+    <tr>
+      <td><strong>Pipeline</strong></td>
+      <td>Total de oportunidades en cartera</td>
+      <td>Dato directo de CRM</td>
+      <td>Ver evolución del embudo de ventas</td>
+    </tr>
+    <tr>
+      <td><strong>Relacionamiento</strong></td>
+      <td>Acciones de relacionamiento realizadas por mes</td>
+      <td>Dato directo de CRM</td>
+      <td>Medir intensidad de gestión comercial: visitas, llamadas, seguimientos</td>
+    </tr>
+    <tr>
+      <td><strong>Cantidad Clientes</strong></td>
+      <td>Total de clientes activos</td>
+      <td>Dato directo de cartera</td>
+      <td>Ver crecimiento o retracción de la base de clientes</td>
+    </tr>
+  </table>
+
+  <p><strong>📈 Gráfico principal:</strong> Evolución de la métrica seleccionada. Al hacer clic en cualquier KPI, el gráfico principal cambia para mostrar esa métrica específica.</p>
+
+  <h2>👥 Sección B: CARTERA <span class="badge badge-blue">Próximamente</span></h2>
+  <p>Información detallada del cliente: datos particulares, formularios de alta, competidores, documentación (carta oferta, carta de aceptación, licitaciones). Tickets de gestión vinculados al CRM con ACyO.</p>
+
+  <h2>📦 Sección C: SERVICIOS / PRODUCTOS <span class="badge badge-blue">Próximamente</span></h2>
+  <p>Servicios activos, en gestión y pendientes. KPIs por contrato (envíos, facturación, desvíos). Tarifas asociadas con sus vigencias. Procesos de adecuación en curso.</p>
+
+  <h2>🤖 Copilot heurístico</h2>
+  <p>Asistente de consulta guiada ubicado en una barra roja al pie de la pantalla. Al hacer clic, se despliega y permite escribir consultas en <strong>lenguaje natural</strong>.</p>
+
+  <table>
+    <tr><th>Tipo de consulta</th><th>Ejemplo</th><th>Respuesta obtenida</th></tr>
+    <tr>
+      <td>Comparativa Real vs Presupuesto</td>
+      <td><code>facturación vs presupuesto Q1 2026</code></td>
+      <td>% de cumplimiento con semáforo y análisis narrativo</td>
+    </tr>
+    <tr>
+      <td>Estado de métricas</td>
+      <td><code>cómo están las NC pendientes</code></td>
+      <td>Cantidad actual con nivel de criticidad y recomendación</td>
+    </tr>
+    <tr>
+      <td>Correlación entre métricas</td>
+      <td><code>días de calle vs nc emitidas 2025</code></td>
+      <td>Análisis de relación entre ambas variables</td>
+    </tr>
+    <tr>
+      <td>Análisis de una métrica</td>
+      <td><code>envíos en Q2 2026</code></td>
+      <td>Promedio, total acumulado y tendencia</td>
+    </tr>
+    <tr>
+      <td>Navegación</td>
+      <td><code>mostrame cartera</code></td>
+      <td>Cambia automáticamente a la sección Cartera</td>
+    </tr>
+    <tr>
+      <td>Filtros por lenguaje</td>
+      <td><code>ver datos de 2025 Q3</code></td>
+      <td>Ajusta año y trimestre automáticamente</td>
+    </tr>
+  </table>
+
+  <div class="highlight">
+    <strong>🧠 Memoria conversacional:</strong> El Copilot recuerda las últimas 5 consultas. Hacé clic en cualquiera del historial para re-ejecutarla sin volver a escribir.
+  </div>
+
+  <h2>🎯 Beneficios para el equipo comercial</h2>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <strong>🔍 Datos unificados</strong>
+      Todo en una pantalla. Sin saltar entre Excel, SAP y CRM.
+    </div>
+    <div class="feature-card">
+      <strong>⚡ Consultas instantáneas</strong>
+      Escribí en lenguaje natural. Sin esperar informes de IT.
+    </div>
+    <div class="feature-card">
+      <strong>📊 Comparativas visuales</strong>
+      Gráficos superpuestos con Real, Proyectado y Presupuesto.
+    </div>
+    <div class="feature-card">
+      <strong>🚨 Alertas automáticas</strong>
+      Semáforos de criticidad para WF pendientes y % cumplimiento.
+    </div>
+    <div class="feature-card">
+      <strong>🔗 Correlaciones</strong>
+      Gráficos de doble eje. Relaciones entre métricas visibles al instante.
+    </div>
+    <div class="feature-card">
+      <strong>⏱️ Decisión en tiempo real</strong>
+      Datos listos para decidir, sin armar planillas manuales.
+    </div>
+  </div>
+
+  <h2>📊 ¿Cómo leer los indicadores?</h2>
+  <table>
+    <tr><th>Indicador</th><th>Significado</th></tr>
+    <tr><td>▲ Verde con +%</td><td>La métrica subió respecto al inicio del período. Generalmente positivo (excepto Días en la Calle y WF Pendientes, donde una suba es negativa)</td></tr>
+    <tr><td>▼ Rojo con -%</td><td>La métrica bajó. Señal de atención según contexto</td></tr>
+    <tr><td>◆ Gris</td><td>Variación mínima (menor a 0.5%). Estabilidad</td></tr>
+    <tr><td><span class="badge badge-green">Verde</span></td><td>>95% del presupuesto = en objetivo</td></tr>
+    <tr><td><span class="badge badge-yellow">Naranja</span></td><td>85-95% = atención</td></tr>
+    <tr><td><span class="badge badge-red">Rojo</span></td><td><85% = crítico</td></tr>
+  </table>
+
+  <footer>
+    Dashboard Comercial v2.3 · Centro de Comando · Frontend desacoplado · Preparado para IA real
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+﻿{
+  "metric": "ip_b2c",
+  "unit": "ARS",
+  "description": "Ingreso promedio B2C por envío en ARS",
+  "granularity": ["year", "quarter", "month"],
+  "data": [
+    { "year": 2025, "quarter": "Q1", "month": "Enero", "value": 6416 },
+    { "year": 2025, "quarter": "Q1", "month": "Febrero", "value": 7256 },
+    { "year": 2025, "quarter": "Q1", "month": "Marzo", "value": 7223 },
+    { "year": 2025, "quarter": "Q2", "month": "Abril", "value": 7100 },
+    { "year": 2025, "quarter": "Q2", "month": "Mayo", "value": 8484 },
+    { "year": 2025, "quarter": "Q2", "month": "Junio", "value": 7397 },
+    { "year": 2025, "quarter": "Q3", "month": "Julio", "value": 7292 },
+    { "year": 2025, "quarter": "Q3", "month": "Agosto", "value": 7772 },
+    { "year": 2025, "quarter": "Q3", "month": "Septiembre", "value": 7533 },
+    { "year": 2025, "quarter": "Q4", "month": "Octubre", "value": 7625 },
+    { "year": 2025, "quarter": "Q4", "month": "Noviembre", "value": 7893 },
+    { "year": 2025, "quarter": "Q4", "month": "Diciembre", "value": 8157 },
+    { "year": 2026, "quarter": "Q1", "month": "Enero", "value": 7845 },
+    { "year": 2026, "quarter": "Q1", "month": "Febrero", "value": 8367 },
+    { "year": 2026, "quarter": "Q1", "month": "Marzo", "value": 8952 },
+    { "year": 2026, "quarter": "Q2", "month": "Abril", "value": 0 }
+  ]
+}

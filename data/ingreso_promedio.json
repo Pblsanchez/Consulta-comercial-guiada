@@ -1,0 +1,24 @@
+﻿{
+  "metric": "ingreso_promedio",
+  "unit": "ARS",
+  "description": "Ingreso promedio total por envío en ARS",
+  "granularity": ["year", "quarter", "month"],
+  "data": [
+    { "year": 2025, "quarter": "Q1", "month": "Enero", "value": 9967 },
+    { "year": 2025, "quarter": "Q1", "month": "Febrero", "value": 11098 },
+    { "year": 2025, "quarter": "Q1", "month": "Marzo", "value": 11278 },
+    { "year": 2025, "quarter": "Q2", "month": "Abril", "value": 11333 },
+    { "year": 2025, "quarter": "Q2", "month": "Mayo", "value": 12366 },
+    { "year": 2025, "quarter": "Q2", "month": "Junio", "value": 11100 },
+    { "year": 2025, "quarter": "Q3", "month": "Julio", "value": 11318 },
+    { "year": 2025, "quarter": "Q3", "month": "Agosto", "value": 12116 },
+    { "year": 2025, "quarter": "Q3", "month": "Septiembre", "value": 12031 },
+    { "year": 2025, "quarter": "Q4", "month": "Octubre", "value": 12384 },
+    { "year": 2025, "quarter": "Q4", "month": "Noviembre", "value": 13190 },
+    { "year": 2025, "quarter": "Q4", "month": "Diciembre", "value": 12906 },
+    { "year": 2026, "quarter": "Q1", "month": "Enero", "value": 13212 },
+    { "year": 2026, "quarter": "Q1", "month": "Febrero", "value": 14500 },
+    { "year": 2026, "quarter": "Q1", "month": "Marzo", "value": 15671 },
+    { "year": 2026, "quarter": "Q2", "month": "Abril", "value": 0 }
+  ]
+}

@@ -222,4 +222,26 @@ canvas {
     transform: translateY(0);
   }
 }
-``
+    .dual-kpi {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .dual-left {
+      flex: 1;
+    }
+    .dual-right {
+      text-align: center;
+      padding-left: 12px;
+      border-left: 2px solid #e0e0e0;
+      min-width: 80px;
+    }
+    .dual-right h3 {
+      font-size: 12px;
+      color: #888;
+      margin: 0 0 4px 0;
+    }
+    .dual-right .kpi-value {
+      font-size: 22px;
+      color: #27ae60;
+    }
