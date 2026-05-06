@@ -33,14 +33,7 @@
             { "metric": "estado_cuenta", "label": "Cobranzas", "unit": "millones ARS", "format": "money", "chartType": "line" }
           ]
         },
-        {
-          "id": "rentabilidad",
-          "label": "Rentabilidad",
-          "metrics": ["rentabilidad"],
-          "kpis": [
-            { "metric": "rentabilidad", "label": "Rentabilidad", "unit": "%", "format": "percentage", "chartType": "line" }
-          ]
-        },
+
         {
           "id": "gestion",
           "label": "Gestión Comercial",
